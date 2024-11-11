@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -8,14 +8,23 @@
 
 <title>Home - Shopme Admin</title>
 
-<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+<!--<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">-->
+<link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/boostrap.min.css}">
 </head>
 
 <body>
 
 	<div class="container-fluid">
-		<h1>Shopme Control Panel</h1>
+		<div>
+			<h1>Shopme Control Panel</h1>
+		</div>
+		<div>
+			<p></p>
+		</div>
 	</div>
+	<script type="text/javascript" th:src="@{jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{bootstrap/js/boostrap.min.js}"></script>
+	
 </body>
 
 </html>
