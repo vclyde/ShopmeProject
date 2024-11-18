@@ -4,63 +4,71 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
 <title>Home - Shopme Admin</title>
 
 <!--<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">-->
-<link rel="stylesheet" type="text/css" th:href="@{/modules/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/modules/bootstrap/css/bootstrap.min.css}">
 </head>
 
 <body>
 
-	<div class="container-fluid" style="position: relative; min-height: 100vh;">
+	<div class="container-fluid"
+		style="position: relative; min-height: 100vh; padding-bottom: 70px;">
 		<div>
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
 				<div class="container-fluid">
-					<a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/ShopmeAdminSmall.png}"></a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-						data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
+					<a class="navbar-brand" th:href="@{/}"><img
+						th:src="@{/images/ShopmeAdminSmall.png}"></a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+						aria-controls="navbarsExample04" aria-expanded="false"
 						aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 
 					<div class="collapse navbar-collapse" id="navbarsExample04">
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
-							<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/users}">Users
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/categories}">Categories
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/brands}">Brands
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/products}">Products
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/customers}">Customers
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/shipping}">Shipping
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/orders}">Orders
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/report}">Sales
-									Reports </a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/articles}">Articles
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/menus}">Menus
-							</a></li>
-							<li class="nav-item"><a class="nav-link" aria-current="page" th:href="@{/settings}">Settings
-							</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" th:href="@{/users}">Users </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/categories}">Categories </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/brands}">Brands </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/products}">Products </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/customers}">Customers </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/shipping}">Shipping </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/orders}">Orders </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/report}">Sales Reports </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/articles}">Articles </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/menus}">Menus </a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								th:href="@{/settings}">Settings </a></li>
 
-							<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+							<li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" href="#"
 								data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="#">Action</a></li>
 									<li><a class="dropdown-item" href="#">Another action</a></li>
-									<li><a class="dropdown-item" href="#">Something else here</a></li>
+									<li><a class="dropdown-item" href="#">Something else
+											here</a></li>
 								</ul></li>
 						</ul>
 						<form role="search">
-							<input class="form-control" type="search" placeholder="Search" aria-label="Search">
+							<input class="form-control" type="search" placeholder="Search"
+								aria-label="Search">
 						</form>
 					</div>
 				</div>
@@ -71,9 +79,11 @@
 			<h2>Manage Users</h2>
 			<a th:href="@{/users/new}">Create New User</a>
 		</div>
-
+		<div th:if="${message != null}" class="alert alert-success text-center"
+			role="alert">[[${message}]]</div>
 		<div>
-			<table class="table table-responsive table-bordered table-striped table-hover border-primary">
+			<table
+				class="table table-responsive table-bordered table-striped table-hover border-primary">
 				<thead class="table-primary">
 					<tr>
 						<th>User ID</th>
@@ -100,12 +110,15 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="text-center" style="position: absolute; bottom: 0; width: 98%">
+		<div class="text-center"
+			style="position: absolute; bottom: 0; width: 98%">
 			<p>Shopme Control Panel - Copyright &copy; Shopme</p>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/modules/jquery/jquery.min.js}"></script>
-	<script type="text/javascript" th:src="@{/modules/bootstrap/js/bootstrap.bundle.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/modules/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/modules/bootstrap/js/bootstrap.bundle.js}"></script>
 
 </body>
 
