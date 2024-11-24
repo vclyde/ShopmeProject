@@ -1,6 +1,7 @@
 package com.shopme.admin.user;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,13 +15,12 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private RoleRepository roleRepo;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
 
 	public List<User> listAllUsers() {
 		return (List<User>) userRepo.findAll();
@@ -34,15 +34,41 @@ public class UserService {
 		encodePassword(user);
 		userRepo.save(user);
 	}
-	
+
 	public void encodePassword(User user) {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 	}
-	
-	public boolean isEmailUnique(String email) {
+
+	public boolean isEmailUnique(Integer id, String email) {
 		User user = userRepo.getUserByEmail(email);
 		
-		return user == null; // null means no duplicate in db
+		if (user == null) { // null means no duplicate in db
+			return true;
+		}
+		
+		boolean isCreatingNew = (id == null);
+		if (isCreatingNew) {
+			if (user != null) {
+				return false;
+			}
+		} else {
+			if (user.getId() != null) {
+				return false;
+			}
+		}
+		
+		// id != null 
+		// user.getId().equals(id);
+
+		return true; 
+	}
+
+	public User get(Integer id) throws UserNotFoundException {
+		try {
+			return userRepo.findById(id).get();
+		} catch (NoSuchElementException e) {
+			throw new UserNotFoundException("User not found with ID: " + id);
+		}
 	}
 }
