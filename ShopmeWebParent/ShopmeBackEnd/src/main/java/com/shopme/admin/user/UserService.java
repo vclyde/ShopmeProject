@@ -6,11 +6,13 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -31,22 +33,22 @@ public class UserService {
 	}
 
 	public void save(User user) {
-		
+
 		boolean isUpdatingUser = user.getId() != null;
-		
+
 		if (isUpdatingUser) { // Existing user
 			User existingUser = userRepo.findById(user.getId()).get();
-			
+
 			if (user.getPassword().isEmpty()) { // Check if no password submitted
 				user.setPassword(existingUser.getPassword());
 			} else {
 				encodePassword(user);
 			}
-			
+
 		} else { // New user
 			encodePassword(user);
 		}
-		
+
 		userRepo.save(user);
 	}
 
@@ -57,13 +59,13 @@ public class UserService {
 
 	public boolean isEmailUnique(Integer id, String email) {
 		User user = userRepo.getUserByEmail(email);
-		
-		if (user == null) { // null means no duplicate in db
+
+		if (user == null) { // null means no duplicate in DB
 			return true;
 		}
-		
+
 		return (id != null) && (user.getId() == id);
-		
+
 //		boolean isCreatingNew = (id == null);
 //		if (isCreatingNew) {
 //			if (user != null) {
@@ -85,14 +87,18 @@ public class UserService {
 			throw new UserNotFoundException("Could not find anay user with ID: " + id);
 		}
 	}
-	
+
 	public void delete(Integer id) throws UserNotFoundException {
 		Long countById = userRepo.countById(id);
-		
+
 		if (countById == null || countById == 0) {
 			throw new UserNotFoundException("Could not find any user with ID " + id);
 		}
-		
+
 		userRepo.deleteById(id);
+	}
+	
+	public void updateUserEnabledStatus(Integer id, boolean enabled) {
+		userRepo.updateEnabledStatus(id, enabled);
 	}
 }

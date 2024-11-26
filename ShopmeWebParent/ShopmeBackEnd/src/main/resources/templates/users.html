@@ -18,9 +18,8 @@
 					<a class="navbar-brand" th:href="@{/}">
 						<img th:src="@{/images/ShopmeAdminSmall.png}">
 					</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-						data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
-						aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+						aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarsExample04">
@@ -84,10 +83,10 @@
 			<h2>Manage Users</h2>
 			<a th:href="@{/users/new}">Create New User</a>
 		</div>
-		<div th:if="${message != null}" class="alert alert-success text-center mt-2" role="alert">[[${message}]]</div>
-		<div>
+		<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
+		<div class="col-12">
 			<table class="table table-responsive table-bordered table-hover border-primary">
-				<thead class="table-dark">
+				<thead class="table-primary">
 					<tr>
 						<th>User ID</th>
 						<th>Photos</th>
@@ -103,24 +102,21 @@
 					<tr th:each="user : ${listUsers}">
 						<td>[[${user.id}]]</td>
 						<td>
-							<i class="bi bi-file-person h4 icon-silver"></i>
+							<i class="bi bi-file-person h2 icon-silver"></i>
 						</td>
 						<td>[[${user.email}]]</td>
 						<td>[[${user.firstName}]]</td>
 						<td>[[${user.lastName}]]</td>
 						<td>[[${user.roles}]]</td>
 						<td class="text-center">
-							<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green" href="#"
-								title="Status: Enabled"></a>
-							<a th:if="${user.enabled == false}" class="bi bi-check-circle-fill h4 icon-gray" href="#"
-								title="Status: Disabled"></a>
+							<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
+								th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
+							<a th:if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
+								th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
 						</td>
 						<td>
-							<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}"
-								title="Edit this user"></a>
-							&nbsp;
-							<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}"
-								th:userId="${user.id}" ;
+							<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+							<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
 								title="Delete"></a>
 						</td>
 					</tr>
@@ -144,7 +140,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center" style="position: absolute; bottom: 0; width: 98%">
+		<div class="text-center" style="position: absolute; bottom: 0; width: 98.1%;">
 			<p>Shopme Control Panel - Copyright &copy; Shopme</p>
 		</div>
 	</div>
@@ -157,7 +153,7 @@
 							'click',
 							function(e) {
 								e.preventDefault(); // prevent the default behavior of link/
-								// alert($(this).attr("href"));
+
 								link = $(this);
 								userId = link.attr('userId');
 								$('#yesBtn').attr('href', link.attr('href'));

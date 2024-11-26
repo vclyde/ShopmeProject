@@ -16,9 +16,8 @@
 					<a class="navbar-brand" th:href="@{/}">
 						<img th:src="@{/images/ShopmeAdminSmall.png}">
 					</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-						data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
-						aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+						aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarsExample04">
@@ -81,39 +80,35 @@
 		<div>
 			<h2>Manage Users | [[${pageTitle}]]</h2>
 		</div>
-		<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-			th:object="${user}" onsubmit="return checkEmailUnique(this)">
+		<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;" th:object="${user}"
+			onsubmit="return checkEmailUnique(this)">
 			<input type="hidden" th:field="*{id}">
 			<div class="border border-secondary rounded p-4">
 				<div class="row mb-3">
 					<label for="email" class="col-sm-3 col-form-label">Email:</label>
 					<div class="col-sm-9">
-						<input type="email" class="form-control" th:field="*{email}" minlength="8" maxlength="128"
-							required autofocus>
+						<input type="email" class="form-control" th:field="*{email}" minlength="8" maxlength="128" required autofocus>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<label for="firstName" class="col-sm-3 col-form-label">First Name:</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" th:field="*{firstName}" minlength="2" maxlength="128"
-							required>
+						<input type="text" class="form-control" th:field="*{firstName}" minlength="2" maxlength="128" required>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<label for="lastName" class="col-sm-3 col-form-label">Last Name:</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" th:field="*{lastName}" minlength="2" maxlength="45"
-							required>
+						<input type="text" class="form-control" th:field="*{lastName}" minlength="2" maxlength="45" required>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<label for="password" class="col-sm-3 col-form-label">Password:</label>
 					<div class="col-sm-9">
-						<input type="password" th:if="${user.id == null}" class="form-control" th:field="*{password}"
-							minlength="8" maxlength="20" required>
-						<input type="password" th:if="${user.id != null}" class="form-control" th:field="*{password}"
-							minlength="8" maxlength="20"
-							placeholder="Leave password field blank if you don't want to change password">
+						<input type="password" th:if="${user.id == null}" class="form-control" th:field="*{password}" minlength="8"
+							maxlength="20" required>
+						<input type="password" th:if="${user.id != null}" class="form-control" th:field="*{password}" minlength="8"
+							maxlength="20" placeholder="Leave password field blank if you don't want to change password">
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -127,7 +122,8 @@
 								<input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:id="${role.name}"
 									class="form-check-input border border-primary">
 								<label th:attr="for=${role.name}">
-									[[${role.name}]] - <small>[[${role.description}]]</small>
+									[[${role.name}]] -
+									<small>[[${role.description}]]</small>
 								</label>
 							</div>
 						</th:block>
