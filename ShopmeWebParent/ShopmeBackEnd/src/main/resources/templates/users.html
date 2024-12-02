@@ -85,7 +85,7 @@
 		</div>
 		<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 		<div class="col-12">
-			<table class="table table-responsive table-bordered table-hover border-primary">
+			<table class="table table-responsive table-bordered table-striped table-hover border-primary">
 				<thead class="table-primary">
 					<tr>
 						<th>User ID</th>
@@ -95,14 +95,15 @@
 						<th>Last Name</th>
 						<th>Roles</th>
 						<th>Enabled</th>
-						<th></th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${listUsers}">
 						<td>[[${user.id}]]</td>
 						<td>
-							<i class="bi bi-file-person h2 icon-silver"></i>
+							<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
+							<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="70" class="img-fluid img-thumbnail">
 						</td>
 						<td>[[${user.email}]]</td>
 						<td>[[${user.firstName}]]</td>
