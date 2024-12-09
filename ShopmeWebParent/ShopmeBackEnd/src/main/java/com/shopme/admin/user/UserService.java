@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,8 @@ import com.shopme.common.entity.User;
 @Service
 @Transactional
 public class UserService {
+	
+	static final int USERS_PER_PAGE = 5;
 
 	@Autowired
 	private UserRepository userRepo;
@@ -27,6 +32,12 @@ public class UserService {
 	public List<User> listAllUsers() {
 		return (List<User>) userRepo.findAll();
 	}
+	
+	public Page<User> listByPage(int pageNum) {
+		Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE);
+		
+		return userRepo.findAll(pageable);
+	}
 
 	public List<Role> listAllRoles() {
 		return (List<Role>) roleRepo.findAll();
@@ -34,7 +45,7 @@ public class UserService {
 
 	public User save(User user) {
 
-		boolean isUpdatingUser = user.getId() != null;
+		boolean isUpdatingUser = user.getId() != null; // Id is null in form if new user
 
 		if (isUpdatingUser) { // Existing user
 			User existingUser = userRepo.findById(user.getId()).get();
@@ -97,8 +108,9 @@ public class UserService {
 
 		userRepo.deleteById(id);
 	}
-	
+
 	public void updateUserEnabledStatus(Integer id, boolean enabled) {
 		userRepo.updateEnabledStatus(id, enabled);
 	}
+
 }
