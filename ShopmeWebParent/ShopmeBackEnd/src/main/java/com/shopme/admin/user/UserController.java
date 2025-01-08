@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -19,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
@@ -41,7 +42,6 @@ public class UserController {
 
 		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<User> listUsers = page.getContent();
-		
 
 		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
 		long endCount = startCount + UserService.USERS_PER_PAGE - 1;
@@ -61,8 +61,8 @@ public class UserController {
 		model.addAttribute("sortDir", sortDir); // Sort direction
 		model.addAttribute("reverseSortDir", reverseSortDir); // Reverse sort direction
 		model.addAttribute("keyword", keyword);
-		
-		System.out.println(keyword);
+
+//		System.out.println(keyword);
 
 		return "users";
 	}
@@ -104,7 +104,9 @@ public class UserController {
 		}
 
 		redirectAttrib.addFlashAttribute("message", "The user has been saved successfully!");
-		return "redirect:/users";
+
+		String keyword = user.getEmail().split("@")[0];
+		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + keyword;
 	}
 
 	@GetMapping("/users/edit/{id}")
@@ -153,5 +155,12 @@ public class UserController {
 		redirectAttrib.addFlashAttribute("message", message);
 
 		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAllUsers();
+		UserCsvExporter exporter = new UserCsvExporter();
+		exporter.export(listUsers, response);
 	}
 }

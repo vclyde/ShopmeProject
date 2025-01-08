@@ -19,8 +19,7 @@
 						<img th:src="@{/images/ShopmeAdminSmall.png}">
 					</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
-						aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation"
-					>
+						aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarsExample04">
@@ -82,7 +81,13 @@
 		</div>
 		<div>
 			<h2>Manage Users</h2>
-			<a th:href="@{/users/new}" class="text-decoration-none">Create New User</a>
+			<a th:href="@{/users/new}">Create New User</a>
+			|
+			<a th:href="@{/users/export/csv}">Export to CSV</a>
+			|
+			<a th:href="@{/}">Export to Excel</a>
+			|
+			<a th:href="@{/}">Export to PDF</a>
 		</div>
 		<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 		<div class="m-3">
@@ -102,64 +107,16 @@
 			</form>
 		</div>
 		<div class="col-12">
-			<table class="table table-responsive table-bordered  table-hover border-primary">
+			<table class="table table-responsive table-bordered table-hover">
 				<thead class="table-dark">
 					<tr>
-						<th>
-							<a th:if="${sortField != 'id'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>User ID</a>
-							<a th:if="${sortField == 'id'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>User ID</a>
-							<i th:if="${sortField == 'id'}" th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"></i>
-						</th>
+						<th th:replace="~{fragments :: column_link('id', 'User ID')}" />
 						<th>Photos</th>
-						<th>
-							<a th:if="${sortField != 'email'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>E-mail</a>
-							<a th:if="${sortField == 'email'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>E-mail</a>
-							<i th:if="${sortField == 'email'}"
-								th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"
-							></i>
-						</th>
-						<th>
-							<a th:if="${sortField != 'firstName'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>First Name</a>
-							<a th:if="${sortField == 'firstName'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>First Name</a>
-							<i th:if="${sortField == 'firstName'}"
-								th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"
-							></i>
-						</th>
-						<th>
-							<a th:if="${sortField != 'lastName'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>Last Name</a>
-							<a th:if="${sortField == 'lastName'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>Last Name</a>
-							<i th:if="${sortField == 'lastName'}"
-								th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"
-							></i>
-						</th>
+						<th th:replace="~{fragments :: column_link('email', 'E-mail')}" />
+						<th th:replace="~{fragments :: column_link('firstName', 'First Name')}" />
+						<th th:replace="~{fragments :: column_link('lastName', 'Last Name')}" />
 						<th>Roles</th>
-						<th>
-							<a th:if="${sortField != 'enabled'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>Enabled</a>
-							<a th:if="${sortField == 'enabled'}" class="text-white"
-								th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-							>Enabled</a>
-							<i th:if="${sortField == 'enabled'}"
-								th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"
-							></i>
-						</th>
+						<th th:replace="~{fragments :: column_link('enabled', 'Enabled')}" />
 						<th></th>
 					</tr>
 				</thead>
@@ -169,8 +126,7 @@
 						<td>
 							<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
 							<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="70"
-								class="img-fluid img-thumbnail"
-							>
+								class="img-fluid img-thumbnail">
 						</td>
 						<td>[[${user.email}]]</td>
 						<td>[[${user.firstName}]]</td>
@@ -178,17 +134,14 @@
 						<td>[[${user.roles}]]</td>
 						<td class="text-center">
 							<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
-								th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"
-							></a>
+								th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
 							<a th:if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
-								th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"
-							></a>
+								th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
 						</td>
 						<td>
 							<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
 							<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
-								title="Delete"
-							></a>
+								title="Delete"></a>
 						</td>
 					</tr>
 				</tbody>
@@ -204,37 +157,26 @@
 			<nav>
 				<ul class="pagination justify-content-center my-2">
 					<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-						<a class="page-link"
-							th:href="@{'/users/page/1?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-						>First</a>
+						<a th:replace="~{fragments :: page_link(1, 'First')}"></a>
 					</li>
 					<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-						<a class="page-link"
-							th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-						>Previous</a>
+						<a th:replace="~{fragments :: page_link(${currentPage - 1}, 'Previous')}"></a>
 					</li>
 					<li th:class="${currentPage != i} ? 'page-item' : 'page-item active'"
-						th:each="i : ${#numbers.sequence(1, totalPages)}"
-					>
-						<a class="page-link"
-							th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-						>[[${i}]]</a>
+						th:each="i : ${#numbers.sequence(1, totalPages)}">
+						<a th:replace="~{fragments :: page_link(${i}, ${i})}"></a>
 					</li>
 					<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-						<a class="page-link"
-							th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}"
-						>Next</a>
+						<a th:replace="~{fragments :: page_link(${currentPage + 1}, 'Next')}"></a>
 					</li>
 					<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-						<a class="page-link"
-							th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
-						>Last</a>
+						<a th:replace="~{fragments :: page_link(${totalPages}, 'Last')}"></a>
 					</li>
 				</ul>
 			</nav>
 		</div>
 		<div class="modal fade" tabindex="-1" id="confirmModal">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-fullscreen-sm-down">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="modalTitle">Delete Confirmation</h5>
@@ -274,4 +216,5 @@
         }
     </script>
 </body>
+
 </html>
