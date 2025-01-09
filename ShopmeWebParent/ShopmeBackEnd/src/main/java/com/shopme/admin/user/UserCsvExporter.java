@@ -15,23 +15,11 @@ import com.shopme.common.entity.User;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-public class UserCsvExporter {
+public class UserCsvExporter extends AbstractExporter {
 
 	public void export(List<User> list, HttpServletResponse response) throws IOException {
 		
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-		Instant now = Instant.now();
-		ZonedDateTime zonedDT = now.atZone(ZoneId.systemDefault());
-		String timestamp = zonedDT.format(dateFormatter);
-		
-		// Construct fileName
-		String fileName = "users_" + timestamp + ".csv";
-	
-		// Enables the browser to download the csv file
-		response.setContentType("text/csv");
-		String headerKey = "Content-Disposition";
-		String headerValue = "attachment; filename=" + fileName;
-		response.setHeader(headerKey, headerValue);
+		super.setResponseHeader(response, "text/csv", ".csv");
 		
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 		String[] csvHeader = {"User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled"};

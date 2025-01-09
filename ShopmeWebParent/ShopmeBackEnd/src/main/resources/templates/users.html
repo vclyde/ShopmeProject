@@ -82,12 +82,12 @@
 		<div>
 			<h2>Manage Users</h2>
 			<a th:href="@{/users/new}">Create New User</a>
-			|
+			&nbsp;|&nbsp;
 			<a th:href="@{/users/export/csv}">Export to CSV</a>
-			|
-			<a th:href="@{/}">Export to Excel</a>
-			|
-			<a th:href="@{/}">Export to PDF</a>
+			&nbsp;|&nbsp;
+			<a th:href="@{/users/export/excel}">Export to Excel</a>
+			&nbsp;|&nbsp;
+			<a th:href="@{/users/export/pdf}">Export to PDF</a>
 		</div>
 		<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 		<div class="m-3">
