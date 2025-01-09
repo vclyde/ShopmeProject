@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.lowagie.text.DocumentException;
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
@@ -168,6 +169,13 @@ public class UserController {
 	public void exportToExcel(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAllUsers();
 		UserExcelExporter exporter = new UserExcelExporter();
+		exporter.export(listUsers, response);
+	}
+	
+	@GetMapping("/users/export/pdf")
+	public void exportToPdf(HttpServletResponse response) throws DocumentException, IOException {
+		List<User> listUsers = service.listAllUsers();
+		UserPdfExporter exporter = new UserPdfExporter();
 		exporter.export(listUsers, response);
 	}
 }
