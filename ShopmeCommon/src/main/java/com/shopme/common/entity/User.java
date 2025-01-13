@@ -46,7 +46,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", roles=" + roles + "]";
 	}
 
@@ -136,5 +136,10 @@ public class User {
 			return "/images/default-user.png";
 		}
 		return "/user-photos/" + this.id + "/" + this.photos;
+	}
+	
+	@Transient
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
 }

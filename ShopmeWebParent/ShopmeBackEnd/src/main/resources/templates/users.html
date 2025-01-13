@@ -13,7 +13,7 @@
 <body>
 	<div class="container-fluid" style="position: relative; min-height: 100vh; padding-bottom: 70px;">
 		<div>
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
 					<a class="navbar-brand" th:href="@{/}">
 						<img th:src="@{/images/ShopmeAdminSmall.png}">
@@ -81,13 +81,11 @@
 		</div>
 		<div>
 			<h2>Manage Users</h2>
-			<a th:href="@{/users/new}">Create New User</a>
-			&nbsp;|&nbsp;
-			<a th:href="@{/users/export/csv}">Export to CSV</a>
-			&nbsp;|&nbsp;
-			<a th:href="@{/users/export/excel}">Export to Excel</a>
-			&nbsp;|&nbsp;
-			<a th:href="@{/users/export/pdf}">Export to PDF</a>
+			<a th:href="@{/users/new}" class="bi bi-person-fill-add link-primary h3 me-1" title="Create new user"></a>
+			<a th:href="@{/users/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
+			<a th:href="@{/users/export/excel}" class="bi bi-file-earmark-excel-fill link-success h3 me-1"
+				title="Export to Excel"></a>
+			<a th:href="@{/users/export/pdf}" class="bi bi-file-earmark-pdf-fill link-danger h3" title="Export to PDF"></a>
 		</div>
 		<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 		<div class="m-3">
@@ -101,34 +99,42 @@
 					<input type="search" class="form-control" name="keyword" th:value="${keyword}" required>
 				</div>
 				<div class="col-auto">
-					<button class="btn btn-primary" type="submit">Search</button>
-					<button class="btn btn-secondary" type="reset" onclick="clearFilter()">Clear</button>
+					<button class="btn btn-primary me-1" type="submit" title="Search">
+						<i class="bi bi-search"></i>
+					</button>
+					<button class="btn btn-secondary" type="reset" title="Clear" onclick="clearFilter()">
+						<i class="bi bi-x-lg"></i>
+					</button>
 				</div>
 			</form>
 		</div>
-		<div class="col-12">
-			<table class="table table-responsive table-bordered table-hover">
+		<div class="full-details table-responsive">
+			<table class="table table-bordered table-hover">
 				<thead class="table-dark">
 					<tr>
-						<th th:replace="~{fragments :: column_link('id', 'User ID')}" />
+						<th class="hideable-column">
+							<th th:replace="~{fragments :: column_link('id', 'User ID', 'tag')}" />
+						</th>
 						<th>Photos</th>
-						<th th:replace="~{fragments :: column_link('email', 'E-mail')}" />
-						<th th:replace="~{fragments :: column_link('firstName', 'First Name')}" />
-						<th th:replace="~{fragments :: column_link('lastName', 'Last Name')}" />
+						<th class="hideable-column">
+							<th th:replace="~{fragments :: column_link('email', 'E-mail', 'tag')}" />
+						</th>
+						<th th:replace="~{fragments :: column_link('firstName', 'First Name', 'none')}" />
+						<th th:replace="~{fragments :: column_link('lastName', 'Last Name', 'none')}" />
 						<th>Roles</th>
-						<th th:replace="~{fragments :: column_link('enabled', 'Enabled')}" />
+						<th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}" />
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${listUsers}">
-						<td>[[${user.id}]]</td>
+						<td class="hideable-column">[[${user.id}]]</td>
 						<td>
 							<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
 							<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="70"
 								class="img-fluid img-thumbnail">
 						</td>
-						<td>[[${user.email}]]</td>
+						<td class="hideable-column">[[${user.email}]]</td>
 						<td>[[${user.firstName}]]</td>
 						<td>[[${user.lastName}]]</td>
 						<td>[[${user.roles}]]</td>
@@ -147,6 +153,31 @@
 				</tbody>
 			</table>
 		</div>
+
+		<div class="less-details">
+			<div th:each="user : ${listUsers}" class="row m-1">
+				<div class="col-4">
+					<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
+					<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="100" class="img-fluid img-thumbnail">
+				</div>
+				<div class="col-8">
+					<div>[[${user.fullName}]]</div>
+					<div>[[${user.roles}]]</div>
+					<div class="mt-2">
+						<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
+							th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
+						<a th:if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
+							th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
+						&nbsp;
+						<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+						&nbsp;
+						<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
+							title="Delete"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="text-center m-1" th:if="${totalItems > 0}">
 			<span>Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 		</div>
@@ -155,7 +186,7 @@
 		</div>
 		<div th:if="${totalPages > 1}">
 			<nav>
-				<ul class="pagination justify-content-center my-2">
+				<ul class="pagination justify-content-center my-2 flex-wrap">
 					<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 						<a th:replace="~{fragments :: page_link(1, 'First')}"></a>
 					</li>
