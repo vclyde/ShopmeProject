@@ -12,7 +12,17 @@ public class WebSecurityConfig {
 
 	@Bean
 	SecurityFilterChain configureHttpSecurity(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+		
+		http.authorizeHttpRequests(auth -> {
+			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll() // Allow access to
+																									// resources
+					.anyRequest().authenticated(); // Require authentication for other paths
+		}).formLogin(form -> {
+			form.loginPage("/login") // login page
+					.usernameParameter("email") // custom username
+					.permitAll();
+		});
+		
 		return http.build();
 	}
 
