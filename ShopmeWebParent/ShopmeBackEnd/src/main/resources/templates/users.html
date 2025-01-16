@@ -1,89 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-<title>Home - Shopme Admin</title>
-<!--<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">-->
-<link rel="stylesheet" type="text/css" th:href="@{/modules/bootstrap/css/bootstrap.min.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/modules/bootstrapicons/bootstrap-icons.min.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-</head>
+<head th:replace="~{layout :: page_head('Users - Shopme Admin')}"></head>
 <body>
 	<div style="position: relative; min-height: 100vh; padding-bottom: 70px;">
-		<div>
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<div class="container-fluid">
-					<a class="navbar-brand" th:href="@{/}">
-						<img th:src="@{/images/ShopmeAdminSmall.png}" width="120">
-					</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
-						aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarsExample04">
-						<ul class="navbar-nav me-auto mb-2 mb-md-0">
-							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" th:href="@{/users}">Users </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/categories}">Categories </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/brands}">Brands </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/products}">Products </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/customers}">Customers </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/shipping}">Shipping </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/orders}">Orders </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/report}">Sales Reports </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/articles}">Articles </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/menus}">Menus </a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{/settings}">Settings </a>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a class="dropdown-item" href="#">Action</a>
-									</li>
-									<li>
-										<a class="dropdown-item" href="#">Another action</a>
-									</li>
-									<li>
-										<a class="dropdown-item" href="#">Something else here</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
+		<div th:replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
 			<div>
 				<h2>Manage Users</h2>
-				<a th:href="@{/users/new}" class="bi bi-person-fill-add link-primary h3 me-1" title="Create new user"></a>
+				<a th:href="@{/users/new}" class="bi bi-person-fill-add link-secondary h3 me-1" title="Create new user"></a>
 				<a th:href="@{/users/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
-				<a th:href="@{/users/export/excel}" class="bi bi-file-earmark-excel-fill link-success h3 me-1"
+				<a th:href="@{/users/export/excel}" class="bi bi-file-earmark-excel-fill link-secondary h3 me-1"
 					title="Export to Excel"></a>
-				<a th:href="@{/users/export/pdf}" class="bi bi-file-earmark-pdf-fill link-danger h3" title="Export to PDF"></a>
+				<a th:href="@{/users/export/pdf}" class="bi bi-file-earmark-pdf-fill link-secondary h3" title="Export to PDF"></a>
 			</div>
 			<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 			<div class="m-3">
@@ -222,12 +150,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center" style="position: absolute; bottom: 0; width: 100%;">
-			<p>Shopme Control Panel - Copyright &copy; Shopme</p>
-		</div>
+		<div th:replace="~{layout :: footer}"></div>
 	</div>
-	<script type="text/javascript" th:src="@{/modules/jquery/jquery.min.js}"></script>
-	<script type="text/javascript" th:src="@{/modules/bootstrap/js/bootstrap.bundle.js}"></script>
+	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
         $(document).ready(function () {
             $('.link-delete').on('click', function (e) {

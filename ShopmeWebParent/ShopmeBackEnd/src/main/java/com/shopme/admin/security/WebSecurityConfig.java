@@ -18,35 +18,30 @@ public class WebSecurityConfig {
 		return new ShopmeUserDetailsService();
 	}
 
-//	@Bean
-//	AuthenticationProvider authenticationProvider() {
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(userDetailsService());
-//		authProvider.setPasswordEncoder(passwordEncoder());
-//
-//		return authProvider;
-//	}
-
 	@Bean
 	SecurityFilterChain configureHttpSecurity(HttpSecurity http) throws Exception {
-		http.authenticationProvider(new DaoAuthenticationProvider() {{
-			setUserDetailsService(userDetailsService());
-			setPasswordEncoder(passwordEncoder());
-		}});
+		http.authenticationProvider(new DaoAuthenticationProvider() {
+			{
+				setUserDetailsService(userDetailsService());
+				setPasswordEncoder(passwordEncoder());
+			}
+		});
 		http.authorizeHttpRequests(auth -> {
 			// Allow access to static resources
-			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll()
+			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "styles.css").permitAll()
 					// Require authentication for other paths
 					.anyRequest().authenticated();
 		}).formLogin(form -> {
 			// Permit custom login page with custom username
 			form.loginPage("/login").usernameParameter("email").permitAll();
+		}).logout(logout -> {
+			logout.permitAll();
 		});
 
 		return http.build();
 	}
 
-	@Bean // Using bcrypt cryptographic algorithm 
+	@Bean // Using bcrypt cryptographic algorithm
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

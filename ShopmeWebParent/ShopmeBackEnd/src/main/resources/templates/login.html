@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-<title>Login - Shopme Admin</title>
-<!--<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">-->
-<link rel="stylesheet" type="text/css" th:href="@{/modules/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:replace="~{layout :: page_head('Login - Shopme Admin')}" />
 <body>
 	<div class="container-fluid text-center"
 		style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
@@ -17,6 +10,9 @@
 		<form th:action="@{/login}" method="post" style="width: 350px; margin: 0 auto;">
 			<div th:if="${param.error}">
 				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			</div>
+			<div th:if="${param.logout}">
+				<p class="text-warning">You have been logged out.</p>
 			</div>
 			<div class="border border-secondary rounded p-3">
 				<p>Access to Shopme Control Panel</p>
@@ -30,11 +26,8 @@
 					<button type="submit" class="btn btn-primary">Login</button>
 				</p>
 			</div>
-
 		</form>
-		<div class="text-center" style="position: absolute; bottom: 0; width: 98%">
-			<p>Shopme Control Panel - Copyright &copy; Shopme</p>
-		</div>
 	</div>
+	<div th:replace="~{layout :: footer}"></div>
 </body>
 </html>

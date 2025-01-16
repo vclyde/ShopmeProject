@@ -13,8 +13,7 @@ public class ShopmeUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepo;
 
-
-	@Override // Using email parameter
+	@Override // Using email as our username
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userRepo.getUserByEmail(email);
 
@@ -24,5 +23,4 @@ public class ShopmeUserDetailsService implements UserDetailsService {
 		
 		throw new UsernameNotFoundException("Could not find user with email: " + email);
 	}
-
 }
