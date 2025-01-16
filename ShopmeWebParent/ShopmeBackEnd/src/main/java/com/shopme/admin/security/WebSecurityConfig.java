@@ -28,7 +28,7 @@ public class WebSecurityConfig {
 		});
 		http.authorizeHttpRequests(auth -> {
 			// Allow access to static resources
-			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "styles.css").permitAll()
+			auth.requestMatchers("/images/**", "/modules/**", "common.js", "style.css").permitAll()
 					// Require authentication for other paths
 					.anyRequest().authenticated();
 		}).formLogin(form -> {
