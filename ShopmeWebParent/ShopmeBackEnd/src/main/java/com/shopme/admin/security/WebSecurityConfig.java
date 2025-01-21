@@ -1,8 +1,9 @@
 package com.shopme.admin.security;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +29,8 @@ public class WebSecurityConfig {
 		});
 		http.authorizeHttpRequests(auth -> {
 			// Allow access to static resources
-			auth.requestMatchers("/images/**", "/modules/**", "common.js", "style.css").permitAll()
+			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll()
+				.requestMatchers("/users/**").hasAuthority("Admin")
 					// Require authentication for other paths
 					.anyRequest().authenticated();
 		}).formLogin(form -> {
@@ -36,6 +38,10 @@ public class WebSecurityConfig {
 			form.loginPage("/login").usernameParameter("email").permitAll();
 		}).logout(logout -> {
 			logout.permitAll();
+		}).rememberMe(rememberMe -> {
+			// Key is used when
+			rememberMe.key("ABCDefghijklmnopqrstuvwXYZ_1234567890")
+					.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(7));
 		});
 
 		return http.build();

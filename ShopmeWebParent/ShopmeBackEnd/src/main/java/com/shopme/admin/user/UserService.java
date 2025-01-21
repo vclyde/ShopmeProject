@@ -2,6 +2,7 @@ package com.shopme.admin.user;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ import com.shopme.common.entity.User;
 @Transactional
 public class UserService {
 	
-	static final int USERS_PER_PAGE = 5;
+	public static final int USERS_PER_PAGE = 5;
 
 	@Autowired
 	private UserRepository userRepo;
@@ -29,6 +30,10 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	public User getByEmail(String email) {
+		return userRepo.getUserByEmail(email);
+	}
 
 	public List<User> listAllUsers() {
 		return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
@@ -72,6 +77,25 @@ public class UserService {
 
 		return userRepo.save(user);
 	}
+	
+	public User updateAccount(User userInForm) {
+		User userInDb = userRepo.findById(userInForm.getId()).get();
+
+		if (!userInForm.getPassword().isEmpty()) {
+			userInDb.setPassword(userInForm.getPassword());
+			encodePassword(userInDb);
+		}
+		
+		if (userInForm.getPhotos() != null) {
+			userInDb.setPhotos(userInForm.getPhotos());
+		}
+		
+		userInDb.setFirstName(userInForm.getFirstName());
+		userInDb.setLastName(userInForm.getLastName());		
+
+		return userRepo.save(userInDb);
+	}
+ 
 
 	public void encodePassword(User user) {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -105,7 +129,7 @@ public class UserService {
 		try {
 			return userRepo.findById(id).get();
 		} catch (NoSuchElementException e) {
-			throw new UserNotFoundException("Could not find anay user with ID: " + id);
+			throw new UserNotFoundException("Could not find any user with ID: " + id);
 		}
 	}
 
