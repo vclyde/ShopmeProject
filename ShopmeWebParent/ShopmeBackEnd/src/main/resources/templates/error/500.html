@@ -5,23 +5,12 @@
 	<div style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
 		<div th:replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
-			<h1>Sorry, the server has encountered an error while processing your request.</h1>
-			<p>
-				<strong>Status Code:</strong>
-				<span th:text="${status}"></span>
-			</p>
-			<p>
+			<h1 class="display-1" th:text="${status}"></h1>
+			<h3>Sorry, the server has encountered an error while processing your request.</h3>
+			<!-- <p>
 				<strong>Error Message:</strong>
 				<span th:text="${error}"></span>
-			</p>
-			<p>
-				<strong>Timestamp:</strong>
-				<span th:text="${timestamp}"></span>
-			</p>
-			<p>
-				<strong>Path:</strong>
-				<span th:text="${path}"></span>
-			</p>
+			</p> -->
 		</div>
 		<div th:replace="~{layout :: footer}"></div>
 	</div>
