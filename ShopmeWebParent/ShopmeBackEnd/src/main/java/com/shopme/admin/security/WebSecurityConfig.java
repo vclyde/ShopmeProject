@@ -30,7 +30,7 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(auth -> {
 			// Allow access to static resources
 			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll()
-				.requestMatchers("/users/**").hasAuthority("Admin")
+					.requestMatchers("/users/**").hasAuthority("Admin")
 					// Require authentication for other paths
 					.anyRequest().authenticated();
 		}).formLogin(form -> {
