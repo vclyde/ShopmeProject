@@ -2,7 +2,6 @@ package com.shopme.admin.user;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ import com.shopme.common.entity.User;
 @Service
 @Transactional
 public class UserService {
-	
+
 	public static final int USERS_PER_PAGE = 5;
 
 	@Autowired
@@ -30,7 +29,7 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public User getByEmail(String email) {
 		return userRepo.getUserByEmail(email);
 	}
@@ -38,19 +37,19 @@ public class UserService {
 	public List<User> listAllUsers() {
 		return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
 	}
-	
+
 	public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-		
+
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-		
+
 		Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
-		
+
 		if (keyword != null) {
 			return userRepo.findAll(keyword, pageable);
-			
+
 		}
-		
+
 		return userRepo.findAll(pageable);
 	}
 
@@ -77,7 +76,7 @@ public class UserService {
 
 		return userRepo.save(user);
 	}
-	
+
 	public User updateAccount(User userInForm) {
 		User userInDb = userRepo.findById(userInForm.getId()).get();
 
@@ -85,17 +84,16 @@ public class UserService {
 			userInDb.setPassword(userInForm.getPassword());
 			encodePassword(userInDb);
 		}
-		
+
 		if (userInForm.getPhotos() != null) {
 			userInDb.setPhotos(userInForm.getPhotos());
 		}
-		
+
 		userInDb.setFirstName(userInForm.getFirstName());
-		userInDb.setLastName(userInForm.getLastName());		
+		userInDb.setLastName(userInForm.getLastName());
 
 		return userRepo.save(userInDb);
 	}
- 
 
 	public void encodePassword(User user) {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -111,18 +109,18 @@ public class UserService {
 
 		return (id != null) && (user.getId() == id);
 
-//		boolean isCreatingNew = (id == null);
-//		if (isCreatingNew) {
-//			if (user != null) {
-//				return false;
-//			}
-//		} else {
-//			if (user.getId() != id) {
-//				return false;
-//			}
-//		}
+		// boolean isCreatingNew = (id == null);
+		// if (isCreatingNew) {
+		// if (user != null) {
+		// return false;
+		// }
+		// } else {
+		// if (user.getId() != id) {
+		// return false;
+		// }
+		// }
 
-//		return true; 
+		// return true;
 	}
 
 	public User get(Integer id) throws UserNotFoundException {

@@ -2,8 +2,6 @@ package com.shopme.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Disabled;
@@ -37,7 +35,7 @@ public class CategoryRepositoryTest {
 		assertThat(savedCategory.getId()).isGreaterThan(0);
 	}
 
-//	@Disabled
+	// @Disabled
 	@Test
 	public void testCreateSubCategory() {
 		Category parent = new Category(15);
@@ -59,23 +57,23 @@ public class CategoryRepositoryTest {
 		for (Category subCategory : children) {
 			System.out.println(subCategory.getName());
 		}
-		
+
 		assertThat(children.size()).isGreaterThan(0);
-		
+
 	}
-	
+
 	@Test
 	public void testPrintHierarchicalCategories() {
 		Iterable<Category> categories = repo.findAll();
-		
+
 		for (Category category : categories) {
-			
+
 			// Null is the root level
 			if (category.getParent() == null) {
 				System.out.println(category.getName());
-				
+
 				Set<Category> children = category.getChildren();
-				
+
 				for (Category subCategory : children) {
 					System.out.println("--" + subCategory.getName());
 					printChildren(subCategory, 1);
@@ -83,17 +81,17 @@ public class CategoryRepositoryTest {
 			}
 		}
 	}
-	
+
 	private void printChildren(Category parent, int subLevel) {
 		int newSubLevel = subLevel + 1;
 		Set<Category> children = parent.getChildren();
-		
+
 		for (Category subCat : children) {
 			for (int i = 0; i < newSubLevel; i++) {
 				System.out.print("--");
 			}
 			System.out.println(subCat.getName());
-			
+
 			printChildren(subCat, newSubLevel);
 		}
 	}
