@@ -31,8 +31,8 @@ public class WebSecurityConfig {
 			// Allow access to static resources
 			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll()
 					.requestMatchers("/users/**").hasAuthority("Admin")
-					// Require authentication for other paths
-					.anyRequest().authenticated();
+					.requestMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
+					.anyRequest().authenticated(); // Require authentication for other paths
 		}).formLogin(form -> {
 			// Permit custom login page with custom username
 			form.loginPage("/login").usernameParameter("email").permitAll();
