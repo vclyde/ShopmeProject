@@ -1,2 +1,4 @@
 .vscode/
 ShopmeWebParent/node_modules/*
+ShopmeWebParent/ShopmeBackEnd/Shopme-backend.log
+ShopmeWebParent/ShopmeBackEnd/src/main/resources/application.properties
