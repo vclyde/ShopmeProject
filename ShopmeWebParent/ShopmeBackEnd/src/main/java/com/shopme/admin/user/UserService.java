@@ -109,18 +109,18 @@ public class UserService {
 
 		return (id != null) && (user.getId() == id);
 
-//		boolean isCreatingNew = (id == null);
-//		if (isCreatingNew) {
-//			if (user != null) {
-//				return false;
-//			}
-//		} else {
-//			if (user.getId() != id) {
-//				return false;
-//			}
-//		}
+		// boolean isCreatingNew = (id == null);
+		// if (isCreatingNew) {
+		// if (user != null) {
+		// return false;
+		// }
+		// } else {
+		// if (user.getId() != id) {
+		// return false;
+		// }
+		// }
 
-//		return true; 
+		// return true;
 	}
 
 	public User get(Integer id) throws UserNotFoundException {
