@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: page_head(${pageTitle})}"></head>
 <body>
+	<div style="position: relative; min-height: 100vh; padding-bottom: 70px;">
+		<div th:replace="~{layout :: menu}"></div>
+		<div class="container-fluid">
+			<div>
+				<h2>Manage Categories | [[${pageTitle}]]</h2>
+			</div>
+		</div>
 
+		<div class="modal fade" tabindex="-1" id="modalDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalTitle">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center">
+						<span id="modalBody"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="~{layout :: footer}"></div>
+	</div>
+	<th:block th:replace="~{layout :: scripts}"></th:block>
+	<script type="text/javascript">
+        moduleUrl = "[[@{/users}]]";
+
+        function checkEmailUnique(form) {
+
+            url = "[[@{/users/check-email}]]";
+            userEmail = $('#email').val();
+            userId = $('#id').val();
+            csrfVal = $('input[name="_csrf"]').val();
+
+            params = {
+                id : userId,
+                email : userEmail,
+                _csrf : csrfVal
+            }; // specify the key/param name
+
+            $.post(url, params, function (response) {
+                if (response === "OK") {
+                    form.submit();
+                } else if (response === "Duplicated") {
+                    showModalDialog("Warning", "There is another user having the email " + userEmail);
+                } else {
+                    showModalDialog("Error", "Unknown response from server");
+                }
+            }).fail(function () {
+                showModalDialog("Error", "Could not connect to the server");
+            });
+
+            return false;
+        }
+
+        function showModalDialog(title, message) {
+            $('#modalTitle').text(title);
+            $('#modalBody').text(message);
+
+            $('#modalDialog').modal('show');
+        }
+    </script>
+	<script th:src="@{/js/common_form.js}"></script>
 </body>
 </html>
