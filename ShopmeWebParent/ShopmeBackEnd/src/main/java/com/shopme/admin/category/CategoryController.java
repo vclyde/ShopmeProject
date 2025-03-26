@@ -65,6 +65,7 @@ public class CategoryController {
 	public String newCategory(Model model) {
 
 		model.addAttribute("pageTitle", "Create New Category");
+		model.addAttribute("category", new Category());
 
 		return "categories/category_form";
 	}
