@@ -5,9 +5,9 @@
 	<div style="position: relative; min-height: 100vh; padding-bottom: 70px;">
 		<div th:replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
-			<div>
-				<h2>Manage Users | [[${pageTitle}]]</h2>
-			</div>
+			<!-- <div> -->
+				<h2 class="py-1">Manage Users | [[${pageTitle}]]</h2>
+			<!-- </div> -->
 			<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;" th:object="${user}"
 				onsubmit="return checkEmailUnique(this)" enctype="multipart/form-data">
 				<input type="hidden" th:field="*{id}">

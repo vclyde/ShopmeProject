@@ -29,10 +29,11 @@ public class WebSecurityConfig {
 		});
 		http.authorizeHttpRequests(auth -> {
 			// Allow access to static resources
-			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css").permitAll()
-					.requestMatchers("/users/**").hasAuthority("Admin")
+			auth.requestMatchers("/images/**", "/modules/**", "/js/**", "style.css")
+					.permitAll().requestMatchers("/users/**").hasAuthority("Admin")
 					.requestMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
-					.anyRequest().authenticated(); // Require authentication for other paths
+					// Require authentication for other paths
+					.anyRequest().authenticated();
 		}).formLogin(form -> {
 			// Permit custom login page with custom username
 			form.loginPage("/login").usernameParameter("email").permitAll();
