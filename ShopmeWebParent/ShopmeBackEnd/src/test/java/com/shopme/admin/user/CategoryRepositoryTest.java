@@ -26,22 +26,35 @@ public class CategoryRepositoryTest {
 	@Disabled
 	@Test
 	public void testCreateRootCategory() {
-		String name = "Electronics";
+		String name = "Computers";
 		Category category = new Category(name);
 		category.setAlias(name);
-		category.setImage("default.png");
+		category.setImage("");
+		category.setEnabled(true);
 		Category savedCategory = repo.save(category);
+
+		assertThat(savedCategory.getId()).isGreaterThan(0);
+
+		name = "Electronics";
+		category = new Category(name);
+		category.setAlias(name);
+		category.setImage("");
+		category.setEnabled(true);
+		savedCategory = repo.save(category);
 
 		assertThat(savedCategory.getId()).isGreaterThan(0);
 	}
 
-	// @Disabled
+	@Disabled
 	@Test
 	public void testCreateSubCategory() {
-		Category parent = new Category(15);
-		Category subCategory = new Category("iPhone 16 Pro Max", parent);
-		subCategory.setAlias("iPhone 16 Pro Max");
-		subCategory.setImage("default.png");
+		Category parent = new Category(12);
+		String name = "iPhone 16";
+
+		Category subCategory = new Category(name, parent);
+		subCategory.setAlias(name);
+		subCategory.setImage("");
+		subCategory.setEnabled(true);
 
 		Category savedCategory = repo.save(subCategory);
 
@@ -59,7 +72,6 @@ public class CategoryRepositoryTest {
 		}
 
 		assertThat(children.size()).isGreaterThan(0);
-
 	}
 
 	@Test

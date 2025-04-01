@@ -3,6 +3,8 @@ package com.shopme.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.annotation.Transient;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +49,11 @@ public class Category {
 	}
 
 	public Category(String name) {
+		this.name = name;
+	}
+
+	public Category(Integer id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
@@ -109,6 +116,14 @@ public class Category {
 
 	public void setChildren(Set<Category> children) {
 		this.children = children;
+	}
+
+	@Transient
+	public String getCategoryImage() {
+		if (id == null || image == null) {
+			return "";
+		}
+		return "/category-images/" + this.id + "/" + this.image;
 	}
 
 }

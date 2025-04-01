@@ -52,7 +52,8 @@
 						<tr th:each="cat : ${listCategories}">
 							<td>[[${cat.id}]]</td>
 							<td class="text-center">
-								<i th:if="${cat.image == null or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
+								<i th:if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
+								<img th:if="${cat.image != ''}" th:src="@{${cat.categoryImage}}" class="img" >
 							</td>
 							<td>[[${cat.name}]]</td>
 							<td>[[${cat.alias}]]</td>

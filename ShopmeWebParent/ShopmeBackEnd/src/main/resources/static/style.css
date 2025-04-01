@@ -20,6 +20,11 @@
 	color: gray;
 }
 
+a.my-menu:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
 /* small screen */
 @media screen and (max-width: 768px) {
 	div.full-details {

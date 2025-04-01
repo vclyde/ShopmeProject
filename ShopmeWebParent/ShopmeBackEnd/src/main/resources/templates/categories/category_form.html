@@ -8,7 +8,7 @@
 			<!-- <div> -->
 			<h2 class="py-1">Manage Categories | [[${pageTitle}]]</h2>
 			<!-- </div> -->
-			<form th:action="@{/users/save}" method="post" style="max-width: 500px; margin: 0 auto;" th:object="${category}"
+			<form th:action="@{/categories/save}" method="post" style="max-width: 590px; margin: 0 auto;" th:object="${category}"
 				enctype="multipart/form-data">
 				<input type="hidden" th:field="*{id}">
 				<div class="border border-secondary rounded p-4">
@@ -33,6 +33,9 @@
 						<div class="col-sm-9">
 							<select class="form-select" th:field="*{parent}">
 								<option value="0">[No Parent]</option>
+								<th:block th:each="cat : ${listCategories}">
+								<option th:value="${cat.id}">[[${cat.name}]]</option>
+								</th:block>
 							</select>
 						</div>
 					</div>
@@ -41,7 +44,7 @@
 						<label class="col-sm-3 col-form-label">Image:</label>
 						<div class="col-sm-9">
 							<input type="hidden" th:field="*{image}">
-							<input type="file" id="fileImage" name="image" class="mb-2" accept="image/png, image/jpeg">
+							<input type="file" id="fileImage" name="fileImage" class="mb-2" accept="image/png, image/jpeg" required>
 							<img id="thumbnail" alt="Image preview" class="img-fluid" th:src="@{/images/image-thumbnail.png}">
 						</div>
 					</div>

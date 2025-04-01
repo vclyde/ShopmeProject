@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.shopme.common.entity.Category;
 
 @Repository
-public interface CategoryRepository
-		extends CrudRepository<Category, Integer>, PagingAndSortingRepository<Category, Integer> {
+public interface CategoryRepository extends CrudRepository<Category, Integer>,
+		PagingAndSortingRepository<Category, Integer> {
 
 	@Query("SELECT c FROM Category c WHERE CONCAT(c.name, ' ', c.alias) LIKE %?1%")
 	public Page<Category> findAll(String keyword, Pageable pageable);
@@ -20,4 +20,6 @@ public interface CategoryRepository
 	@Query("UPDATE Category c SET c.enabled = ?2 WHERE c.id = ?1")
 	@Modifying
 	public void updateEnabledStatus(Integer id, boolean enabled);
+
+	public Long countById(Integer id);
 }
