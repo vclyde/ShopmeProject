@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout :: page_head('Users - Shopme Admin')}"></head>
+<head data-th-replace="~{layout :: page_head('Users - Shopme Admin')}"></head>
 <body>
 	<div style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh; padding-bottom: 70px;">
-		<div th:replace="~{layout :: menu}"></div>
+		<div data-th-replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
 			<div>
 				<h2>Manage Users</h2>
-				<a th:href="@{/users/new}" class="bi bi-person-fill-add link-secondary h3 me-1" title="Create new user"></a>
-				<a th:href="@{/users/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
-				<a th:href="@{/users/export/excel}" class="bi bi-file-earmark-excel-fill link-secondary h3 me-1"
+				<a data-th-href="@{/users/new}" class="bi bi-person-fill-add link-secondary h3 me-1" title="Create new user"></a>
+				<a data-th-href="@{/users/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
+				<a data-th-href="@{/users/export/excel}" class="bi bi-file-earmark-excel-fill link-secondary h3 me-1"
 					title="Export to Excel"></a>
-				<a th:href="@{/users/export/pdf}" class="bi bi-file-earmark-pdf-fill link-secondary h3" title="Export to PDF"></a>
+				<a data-th-href="@{/users/export/pdf}" class="bi bi-file-earmark-pdf-fill link-secondary h3" title="Export to PDF"></a>
 			</div>
-			<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
+			<div data-th-if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 			<div class="m-3">
-				<form th:action="@{/users/page/1}" class="row g-2">
-					<input type="hidden" name="sortField" th:value="${sortField}">
-					<input type="hidden" name="sortDir" th:value="${sortDir}">
+				<form data-th-action="@{/users/page/1}" class="row g-2">
+					<input type="hidden" name="sortField" data-th-value="${sortField}">
+					<input type="hidden" name="sortDir" data-th-value="${sortDir}">
 					<div class="col-auto">
 						<label class="col-form-label">Filter: </label>
 					</div>
 					<div class="col-auto">
-						<input type="search" class="form-control" name="keyword" th:value="${keyword}" required>
+						<input type="search" class="form-control" name="keyword" data-th-value="${keyword}" required>
 					</div>
 					<div class="col-auto">
 						<button class="btn btn-primary me-1" type="submit" title="Search">
@@ -39,25 +39,25 @@
 					<thead class="table-primary">
 						<tr>
 							<th class="hideable-column">
-							<th th:replace="~{fragments :: column_link('id', 'User ID', 'tag')}" />
+							<th data-th-replace="~{fragments :: column_link('id', 'User ID', 'tag')}" />
 							</th>
 							<th>Photos</th>
 							<th class="hideable-column">
-							<th th:replace="~{fragments :: column_link('email', 'E-mail', 'tag')}" />
+							<th data-th-replace="~{fragments :: column_link('email', 'E-mail', 'tag')}" />
 							</th>
-							<th th:replace="~{fragments :: column_link('firstName', 'First Name', 'none')}" />
-							<th th:replace="~{fragments :: column_link('lastName', 'Last Name', 'none')}" />
+							<th data-th-replace="~{fragments :: column_link('firstName', 'First Name', 'none')}" />
+							<th data-th-replace="~{fragments :: column_link('lastName', 'Last Name', 'none')}" />
 							<th>Roles</th>
-							<th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}" />
+							<th data-th-replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}" />
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="user : ${listUsers}">
+						<tr data-th-each="user : ${listUsers}">
 							<td class="hideable-column">[[${user.id}]]</td>
 							<td>
-								<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
-								<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="70"
+								<i data-th-if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
+								<img data-th-if="${user.photos != null}" data-th-src="@{${user.photosImagePath}}" width="70"
 									class="img-fluid img-thumbnail">
 							</td>
 							<td class="hideable-column">[[${user.email}]]</td>
@@ -65,14 +65,14 @@
 							<td>[[${user.lastName}]]</td>
 							<td>[[${user.roles}]]</td>
 							<td class="text-center">
-								<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
+								<a data-th-if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
 									th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
-								<a th:if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
+								<a data-th-if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
 									th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
 							</td>
 							<td>
-								<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-								<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}"
+								<a class="bi bi-pencil-square h4 icon-green" data-th-href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+								<a class="bi bi-trash h4 icon-gray link-delete" data-th-href="@{'/users/delete/' + ${user.id}}"
 									th:userId="${user.id}" title="Delete"></a>
 							</td>
 						</tr>
@@ -80,54 +80,54 @@
 				</table>
 			</div>
 			<div class="less-details">
-				<div th:each="user : ${listUsers}" class="row m-1">
+				<div data-th-each="user : ${listUsers}" class="row m-1">
 					<div class="col-4">
-						<i th:if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
-						<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="100"
+						<i data-th-if="${user.photos == null}" class="bi bi-file-person h2 icon-silver"></i>
+						<img data-th-if="${user.photos != null}" data-th-src="@{${user.photosImagePath}}" width="100"
 							class="img-fluid img-thumbnail">
 					</div>
 					<div class="col-8">
 						<div>[[${user.fullName}]]</div>
 						<div>[[${user.roles}]]</div>
 						<div class="mt-2">
-							<a th:if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
+							<a data-th-if="${user.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
 								th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
-							<a th:if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
+							<a data-th-if="${user.enabled == false}" class="bi bi-circle-fill h4 icon-gray"
 								th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
 							&nbsp;
-							<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+							<a class="bi bi-pencil-square h4 icon-green" data-th-href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
 							&nbsp;
-							<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
+							<a class="bi bi-trash h4 icon-gray link-delete" data-th-href="@{'/users/delete/' + ${user.id}}" data-th-userId="${user.id}"
 								title="Delete"></a>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="text-center m-1" th:if="${totalItems > 0}">
+			<div class="text-center m-1" data-th-if="${totalItems > 0}">
 				<span>Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 			</div>
-			<div class="text-center m-1" th:unless="${totalItems > 0}">
+			<div class="text-center m-1" data-th-unless="${totalItems > 0}">
 				<span>No users found!</span>
 			</div>
-			<div th:if="${totalPages > 1}">
+			<div data-th-if="${totalPages > 1}">
 				<nav>
 					<ul class="pagination justify-content-center my-2 flex-wrap">
-						<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-							<a th:replace="~{fragments :: page_link(1, 'First')}"></a>
+						<li data-th-class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+							<a data-th-replace="~{fragments :: page_link(1, 'First')}"></a>
 						</li>
-						<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-							<a th:replace="~{fragments :: page_link(${currentPage - 1}, 'Previous')}"></a>
+						<li data-th-class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+							<a data-th-replace="~{fragments :: page_link(${currentPage - 1}, 'Previous')}"></a>
 						</li>
-						<li th:class="${currentPage != i} ? 'page-item' : 'page-item active'"
+						<li data-th-class="${currentPage != i} ? 'page-item' : 'page-item active'"
 							th:each="i : ${#numbers.sequence(1, totalPages)}">
-							<a th:replace="~{fragments :: page_link(${i}, ${i})}"></a>
+							<a data-th-replace="~{fragments :: page_link(${i}, ${i})}"></a>
 						</li>
-						<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-							<a th:replace="~{fragments :: page_link(${currentPage + 1}, 'Next')}"></a>
+						<li data-th-class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+							<a data-th-replace="~{fragments :: page_link(${currentPage + 1}, 'Next')}"></a>
 						</li>
-						<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-							<a th:replace="~{fragments :: page_link(${totalPages}, 'Last')}"></a>
+						<li data-th-class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+							<a data-th-replace="~{fragments :: page_link(${totalPages}, 'Last')}"></a>
 						</li>
 					</ul>
 				</nav>
@@ -150,9 +150,9 @@
 				</div>
 			</div>
 		</div>
-		<div th:replace="~{layout :: footer}"></div>
+		<div data-th-replace="~{layout :: footer}"></div>
 	</div>
-	<th:block th:replace="~{layout :: scripts}"></th:block>
+	<th:block data-th-replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
         $(document).ready(function () {
             $('.link-delete').on('click', function (e) {

@@ -6,14 +6,14 @@
 </head>
 <body>
 
-	<th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+	<th data-th-fragment="column_link(fieldName, columnLabel, removeTag)" data-th-remove="${removeTag}">
 		<a class="text-dark"
 			th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
 			[[${columnLabel}]]</a>
-		<i th:if="${sortField == fieldName}" th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"></i>
+		<i data-th-if="${sortField == fieldName}" data-th-class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}"></i>
 	</th>
 
-	<a th:fragment="page_link(pageNum, label)" class="page-link"
+	<a data-th-fragment="page_link(pageNum, label)" class="page-link"
 		th:href="@{'/users/page/' + ${pageNum} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
 
 </body>

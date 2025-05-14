@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout :: page_head('Categories - Shopme Admin')}"></head>
+<head data-th-replace="~{layout :: page_head('Categories - Shopme Admin')}"></head>
 <body>
 	<div
 		style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh; padding-bottom: 70px;">
-		<div th:replace="~{layout :: menu}"></div>
+		<div data-th-replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
 			<div>
 				<h2>Manage Categories</h2>
-				<a th:href="@{/categories/new}" class="bi bi-bag-plus link-secondary h3 me-1" title="Create new category"></a>
-				<a th:href="@{/categories/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
-				<!--  <a th:href="@{/categories/export/excel}" class="bi bi-file-earmark-excel-fill link-secondary h3 me-1"
+				<a data-th-href="@{/categories/new}" class="bi bi-bag-plus link-secondary h3 me-1" title="Create new category"></a>
+				<a data-th-href="@{/categories/export/csv}" class="bi bi-filetype-csv link-secondary h3 me-1" title="Export to CSV"></a>
+				<!--  <a data-th-href="@{/categories/export/excel}" class="bi bi-file-earmark-excel-fill link-secondary h3 me-1"
 					title="Export to Excel"></a>
-				<a th:href="@{/categories/export/pdf}" class="bi bi-file-earmark-pdf-fill link-secondary h3" title="Export to PDF"></a>
+				<a data-th-href="@{/categories/export/pdf}" class="bi bi-file-earmark-pdf-fill link-secondary h3" title="Export to PDF"></a>
 				-->
 			</div>
-			<div th:if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
+			<div data-th-if="${message != null}" class="alert alert-success text-center my-2" role="alert">[[${message}]]</div>
 			<div class="m-3">
-				<form th:action="@{/categories/page/1}" class="row g-2">
-					<input type="hidden" name="sortField" th:value="${sortField}">
-					<input type="hidden" name="sortDir" th:value="${sortDir}">
+				<form data-th-action="@{/categories/page/1}" class="row g-2">
+					<input type="hidden" name="sortField" data-th-value="${sortField}">
+					<input type="hidden" name="sortDir" data-th-value="${sortDir}">
 					<div class="col-auto">
 						<label class="col-form-label">Filter: </label>
 					</div>
 					<div class="col-auto">
-						<input type="search" class="form-control" name="keyword" th:value="${keyword}" required>
+						<input type="search" class="form-control" name="keyword" data-th-value="${keyword}" required>
 					</div>
 					<div class="col-auto">
 						<button class="btn btn-primary me-1" type="submit" title="Search">
@@ -49,24 +49,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cat : ${listCategories}">
+						<tr data-th-each="cat : ${listCategories}">
 							<td>[[${cat.id}]]</td>
 							<td class="text-center">
-								<i th:if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
-								<img th:if="${cat.image != ''}" th:src="@{${cat.categoryImage}}" class="img" >
+								<i data-th-if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
+								<img data-th-if="${cat.image != ''}" data-th-src="@{${cat.categoryImage}}" class="img" >
 							</td>
 							<td>[[${cat.name}]]</td>
 							<td>[[${cat.alias}]]</td>
 							<td class="text-center">
-								<a th:if="${cat.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
+								<a data-th-if="${cat.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
 									th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}" title="Click to disable category"></a>
-								<a th:if="${cat.enabled == false}" class="bi bi-check-circle-fill h4 icon-gray"
+								<a data-th-if="${cat.enabled == false}" class="bi bi-check-circle-fill h4 icon-gray"
 									th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}" title="Click to enable category"></a>
 							</td>
 							<td>
-								<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
+								<a class="bi bi-pencil-square h4 icon-green" data-th-href="@{'/categories/edit/' + ${cat.id}}"
 									title="Edit this category"></a>
-								<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/categories/delete/' + ${cat.id}}"
+								<a class="bi bi-trash h4 icon-gray link-delete" data-th-href="@{'/categories/delete/' + ${cat.id}}"
 									th:catId="${cat.id}" title="Delete this category"></a>
 							</td>
 						</tr>
@@ -74,37 +74,37 @@
 				</table>
 			</div>
 
-			<div class="text-center m-1" th:if="${totalItems > 0}">
+			<div class="text-center m-1" data-th-if="${totalItems > 0}">
 				<span>Showing category # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 			</div>
-			<div class="text-center m-1" th:unless="${totalItems > 0}">
+			<div class="text-center m-1" data-th-unless="${totalItems > 0}">
 				<span>No categories found!</span>
 			</div>
-			<div th:if="${totalPages > 1}">
+			<div data-th-if="${totalPages > 1}">
 				<nav>
 					<ul class="pagination justify-content-center my-2 flex-wrap">
-						<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+						<li data-th-class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 							<a
 								th:href="@{'/categories/page/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 								class="page-link">First</a>
 						</li>
-						<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+						<li data-th-class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
 							<a
 								th:href="@{'/categories/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 								class="page-link">Prev</a>
 						</li>
-						<li th:class="${currentPage != i} ? 'page-item' : 'page-item active'"
+						<li data-th-class="${currentPage != i} ? 'page-item' : 'page-item active'"
 							th:each="i : ${#numbers.sequence(1, totalPages)}">
 							<a
 								th:href="@{'/categories/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 								class="page-link">[[${i}]]</a>
 						</li>
-						<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+						<li data-th-class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 							<a
 								th:href="@{'/categories/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 								class="page-link">Next</a>
 						</li>
-						<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+						<li data-th-class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
 							<a
 								th:href="@{'/categories/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 								class="page-link">Last</a>
@@ -130,9 +130,9 @@
 				</div>
 			</div>
 		</div>
-		<div th:replace="~{layout :: footer}"></div>
+		<div data-th-replace="~{layout :: footer}"></div>
 	</div>
-	<th:block th:replace="~{layout :: scripts}"></th:block>
+	<th:block data-th-replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
         $(document).ready(function () {
             $('.link-delete').on('click', function (e) {
