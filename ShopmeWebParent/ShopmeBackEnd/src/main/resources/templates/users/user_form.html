@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head data-th-replace="~{layout :: page_head(${pageTitle})}"></head>
+<head th:replace="~{layout :: page_head(${pageTitle})}"></head>
 <body>
 	<div style="position: relative; min-height: 100vh; padding-bottom: 70px;">
-		<div data-th-replace="~{layout :: menu}"></div>
+		<div th:replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
 			<!-- <div> -->
 				<h2 class="py-1">Manage Users | [[${pageTitle}]]</h2>
 			<!-- </div> -->
-			<form data-th-action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;" data-th-object="${user}"
+			<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;" th:object="${user}"
 				onsubmit="return checkEmailUnique(this)" enctype="multipart/form-data">
-				<input type="hidden" data-th-field="*{id}">
+				<input type="hidden" th:field="*{id}">
 				<div class="border border-secondary rounded p-4">
 					<div class="row mb-3">
 						<label for="email" class="col-sm-3 col-form-label">Email:</label>
 						<div class="col-sm-9">
-							<input type="email" class="form-control border border-dark-subtle" data-th-field="*{email}" minlength="8"
+							<input type="email" class="form-control border border-dark-subtle" th:field="*{email}" minlength="8"
 								maxlength="128" required autofocus>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="firstName" class="col-sm-3 col-form-label">First Name:</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control border border-dark-subtle" data-th-field="*{firstName}" minlength="2"
+							<input type="text" class="form-control border border-dark-subtle" th:field="*{firstName}" minlength="2"
 								maxlength="128" required>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="lastName" class="col-sm-3 col-form-label">Last Name:</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control border border-dark-subtle" data-th-field="*{lastName}" minlength="2"
+							<input type="text" class="form-control border border-dark-subtle" th:field="*{lastName}" minlength="2"
 								maxlength="45" required>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="password" class="col-sm-3 col-form-label">Password:</label>
 						<div class="col-sm-9">
-							<input type="password" data-th-if="${user.id == null}" class="form-control border border-dark-subtle"
+							<input type="password" th:if="${user.id == null}" class="form-control border border-dark-subtle"
 								th:field="*{password}" minlength="8" maxlength="20" required>
-							<input type="password" data-th-if="${user.id != null}" class="form-control border border-dark-subtle"
+							<input type="password" th:if="${user.id != null}" class="form-control border border-dark-subtle"
 								th:field="*{password}" minlength="8" maxlength="20"
 								placeholder="Leave password field blank if you don't want to change password">
 						</div>
@@ -46,14 +46,14 @@
 					<div class="row mb-3">
 						<label class="col-sm-3 col-form-label">Roles:</label>
 						<div class="col-sm-9">
-							<th:block data-th-each="role : ${listRoles}">
-								<!-- <input type="checkbox" data-th-field="*{roles}" data-th-text="${role.name}" data-th-value="${role.id}" class="form-check-input border border-primary m-2"> 
+							<th:block th:each="role : ${listRoles}">
+								<!-- <input type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}" class="form-check-input border border-primary m-2"> 
 								- <small>[[${role.description}]]</small>
 							<br> -->
 								<div class="form-check">
-									<input type="checkbox" data-th-field="*{roles}" data-th-value="${role.id}" data-th-id="${role.name}"
+									<input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:id="${role.name}"
 										class="form-check-input border border-primary">
-									<label data-th-attr="for=${role.name}">
+									<label th:attr="for=${role.name}">
 										[[${role.name}]] -
 										<small>[[${role.description}]]</small>
 									</label>
@@ -66,7 +66,7 @@
 						<label for="enabled1" class="col-sm-3 col-form-label">Enabled:</label>
 						<div class="col-sm-9">
 							<div class="form-check">
-								<input type="checkbox" data-th-field="*{enabled}" class="form-check-input border border-primary">
+								<input type="checkbox" th:field="*{enabled}" class="form-check-input border border-primary">
 							</div>
 						</div>
 					</div>
@@ -74,9 +74,9 @@
 					<div class="row mb-3">
 						<label class="col-sm-3 col-form-label">Photos:</label>
 						<div class="col-sm-9">
-							<input type="hidden" data-th-field="*{photos}">
+							<input type="hidden" th:field="*{photos}">
 							<input type="file" id="fileImage" name="image" accept="image/png, image/jpeg" class="mb-2">
-							<img id="thumbnail" alt="Photos preview" data-th-src="@{${user.photosImagePath}}" class="img-fluid img-thumbnail"
+							<img id="thumbnail" alt="Photos preview" th:src="@{${user.photosImagePath}}" class="img-fluid img-thumbnail"
 								width="150">
 						</div>
 					</div>
@@ -105,9 +105,9 @@
 				</div>
 			</div>
 		</div>
-		<div data-th-replace="~{layout :: footer}"></div>
+		<div th:replace="~{layout :: footer}"></div>
 	</div>
-	<th:block data-th-replace="~{layout :: scripts}"></th:block>
+	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
         moduleUrl = "[[@{/users}]]";
 
@@ -146,6 +146,6 @@
             $('#modalDialog').modal('show');
         }
     </script>
-    <script data-th-src="@{/js/common_form.js}"></script>
+    <script th:src="@{/js/common_form.js}"></script>
 </body>
 </html>

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head data-th-replace="~{layout :: page_head('404 - Shopme Admin')}" />
+<head th:replace="~{layout :: page_head('404 - Shopme Admin')}" />
 <body>
 	<div style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
-		<div data-th-replace="~{layout :: menu}"></div>
+		<div th:replace="~{layout :: menu}"></div>
 		<div class="container-fluid">
-			<h1 class="display-1" data-th-text="${status}"></h1>
+			<h1 class="display-1" th:text="${status}"></h1>
 			<h3>Sorry, the requested page could not be found.</h3>
 			<!-- <p>
 				<strong>Error Message:</strong>
-				<span data-th-text="${error}"></span>
+				<span th:text="${error}"></span>
 			</p> -->
 		</div>
-		<div data-th-replace="~{layout :: footer}"></div>
+		<div th:replace="~{layout :: footer}"></div>
 	</div>
-	<th:block data-th-replace="~{layout :: scripts}"></th:block>
+	<th:block th:replace="~{layout :: scripts}"></th:block>
 </body>
 </html>

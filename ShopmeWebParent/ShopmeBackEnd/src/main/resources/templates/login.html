@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head data-th-replace="~{layout :: page_head('Login - Shopme Admin')}" />
+<head th:replace="~{layout :: page_head('Login - Shopme Admin')}" />
 <body>
 	<div class="container-fluid text-center"
 		style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
 		<div>
-			<img alt="logo" data-th-src="@{/images/ShopmeAdminBig.png}" width="400">
+			<img alt="logo" th:src="@{/images/ShopmeAdminBig.png}" width="400">
 		</div>
-		<form data-th-action="@{/login}" method="post" style="width: 350px; margin: 0 auto;">
-			<div data-th-if="${param.error}">
+		<form th:action="@{/login}" method="post" style="width: 350px; margin: 0 auto;">
+			<div th:if="${param.error}">
 				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
 			</div>
-			<div data-th-if="${param.logout}">
+			<div th:if="${param.logout}">
 				<p class="text-warning">You have been logged out.</p>
 			</div>
 			<div class="border border-secondary rounded p-3">
@@ -32,6 +32,6 @@
 			</div>
 		</form>
 	</div>
-	<div data-th-replace="~{layout :: footer}"></div>
+	<div th:replace="~{layout :: footer}"></div>
 </body>
 </html>
