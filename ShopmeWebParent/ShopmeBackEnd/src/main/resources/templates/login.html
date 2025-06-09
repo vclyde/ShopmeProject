@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout :: page_head('Login - Shopme Admin')}" />
-<body>
-	<div class="container-fluid text-center"
-		style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
-		<div>
-			<img alt="logo" th:src="@{/images/ShopmeAdminBig.png}" width="400">
+	<head th:replace="~{layout :: page_head('Login - Shopme Admin')}" />
+	<body>
+		<div class="container-fluid text-center"
+			 style="position: relative; min-height: 100vh; min-height: 100dvh; min-height: 100svh; min-height: 100lvh;">
+			<div>
+				<img alt="logo" th:src="@{/images/ShopmeAdminBig.png}" width="400">
+			</div>
+			<form th:action="@{/login}" method="post" style="width: 350px; margin: 0 auto;">
+				<div th:if="${param.error}">
+					<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+				</div>
+				<div th:if="${param.logout}">
+					<p class="text-warning">You have been logged out.</p>
+				</div>
+				<div class="border border-secondary rounded p-3">
+					<p>Access to Shopme Control Panel</p>
+					<p>
+						<input type="email" name="email" class="form-control" placeholder="E-mail" required autofocus>
+					</p>
+					<p>
+						<input type="password" name="password" class="form-control" placeholder="Password" required>
+					</p>
+					<p>
+						<input type="checkbox" name="remember-me" id="rememberMe" class="form-check-input border border-primary" checked>
+						&nbsp;<label for="rememberMe" class="form-check-label">Remember Me</label>
+					</p>
+					<p>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</p>
+				</div>
+			</form>
 		</div>
-		<form th:action="@{/login}" method="post" style="width: 350px; margin: 0 auto;">
-			<div th:if="${param.error}">
-				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-			</div>
-			<div th:if="${param.logout}">
-				<p class="text-warning">You have been logged out.</p>
-			</div>
-			<div class="border border-secondary rounded p-3">
-				<p>Access to Shopme Control Panel</p>
-				<p>
-					<input type="email" name="email" class="form-control" placeholder="E-mail" required autofocus>
-				</p>
-				<p>
-					<input type="password" name="password" class="form-control" placeholder="Password" required>
-				</p>
-				<p>
-					<input type="checkbox" name="remember-me" id="rememberMe" class="form-check-input border border-primary" checked>
-					&nbsp;<label for="rememberMe" class="form-check-label">Remember Me</label>
-				</p>
-				<p>
-					<button type="submit" class="btn btn-primary">Login</button>
-				</p>
-			</div>
-		</form>
-	</div>
-	<div th:replace="~{layout :: footer}"></div>
-</body>
+		<div th:replace="~{layout :: footer}"></div>
+	</body>
 </html>

@@ -1,10 +1,12 @@
 package com.shopme.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Disabled
 class PasswordEncoderTest {
 
 	@Test

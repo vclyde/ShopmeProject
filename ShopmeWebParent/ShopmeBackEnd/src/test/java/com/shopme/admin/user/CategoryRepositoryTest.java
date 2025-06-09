@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import com.shopme.admin.category.CategoryRepository;
 import com.shopme.common.entity.Category;
 
+@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)

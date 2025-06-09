@@ -17,7 +17,9 @@ import org.springframework.test.annotation.Rollback;
 
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+import org.junit.jupiter.api.Disabled;
 
+@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)

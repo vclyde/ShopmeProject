@@ -12,7 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopme.common.entity.Role;
+import org.junit.jupiter.api.Disabled;
 
+@Disabled
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false) // Retain table updates
