@@ -64,13 +64,11 @@ public class CategoryService {
 
 		for (Category category : categoriesInDB) {
 			if (category.getParent() == null) { // Null is the parent/root
-				categoriesUsedInForm
-						.add(new Category(category.getId(), category.getName()));
+				categoriesUsedInForm.add(new Category(category.getId(), category.getName()));
 
 				Set<Category> children = category.getChildren();
 				for (Category subCategory : children) {
-					categoriesUsedInForm.add(
-							new Category(category.getId(), "--" + subCategory.getName()));
+					categoriesUsedInForm.add(new Category(subCategory.getId(), "--" + subCategory.getName()));
 					listChildren(categoriesUsedInForm, subCategory, 1);
 				}
 			}
@@ -79,8 +77,7 @@ public class CategoryService {
 		return categoriesUsedInForm;
 	}
 
-	private void listChildren(List<Category> categoriesUsedInForm, Category parent,
-			int subLevel) {
+	private void listChildren(List<Category> categoriesUsedInForm, Category parent, int subLevel) {
 		int newSubLevel = subLevel + 1;
 		Set<Category> children = parent.getChildren();
 

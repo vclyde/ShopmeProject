@@ -15,9 +15,9 @@ $(document).ready(function() {
 		if (file) {
 			var allowedTypes = ['image/jpeg', 'image/png'];
 
-			if (fileSize > 1048576) {
+			if (fileSize > 102400) {
 
-				this.setCustomValidity("You must choose an image less than 1MB!");
+				this.setCustomValidity("You must choose an image less than 100KB!");
 				this.reportValidity();
 				this.value = '';
 			} else if (!allowedTypes.includes(file.type)) {
@@ -39,6 +39,6 @@ function showImageThumbnail(fileInput) {
 	var reader = new FileReader();
 	reader.onload = function(e) { // Assigns a function to execute when the file has been successfully read
 		$("#thumbnail").attr('src', e.target.result); // e.target.result contains the result of the file read operation
-	}
+	};
 	reader.readAsDataURL(file);
 }

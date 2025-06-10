@@ -14,8 +14,9 @@ import org.springframework.test.annotation.Rollback;
 
 import com.shopme.admin.category.CategoryRepository;
 import com.shopme.common.entity.Category;
+import java.util.List;
 
-@Disabled
+//@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
@@ -107,5 +108,16 @@ public class CategoryRepositoryTest {
 
 			printChildren(subCat, newSubLevel);
 		}
+	}
+	
+	@Test
+	public void testListRootCategories() {
+		
+		List<Category> listRoot = repo.findRootCategories();
+		assertThat(listRoot.size()).isGreaterThan(0);
+		System.out.println(listRoot.size());
+		listRoot.forEach(category -> {
+			System.out.println(category.getName());
+		});
 	}
 }
