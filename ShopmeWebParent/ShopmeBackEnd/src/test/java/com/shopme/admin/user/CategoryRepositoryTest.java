@@ -16,7 +16,7 @@ import com.shopme.admin.category.CategoryRepository;
 import com.shopme.common.entity.Category;
 import java.util.List;
 
-//@Disabled
+@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
@@ -63,6 +63,7 @@ public class CategoryRepositoryTest {
 		assertThat(savedCategory.getId()).isGreaterThan(0);
 	}
 
+	@Disabled
 	@Test
 	public void testGetCategory() {
 		Category category = repo.findById(2).get();

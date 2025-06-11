@@ -28,11 +28,11 @@ public class CategoryController {
 
 	@GetMapping
 	public String listFirstPage(Model model) {
-		// List<Category> categories = service.listAllCategories();
-		// model.addAttribute("listCategories", categories);
+		 List<Category> categories = service.listAllCategories();
+		 model.addAttribute("listCategories", categories);
 
-		// return "categories/categories";
-		return listByPage(1, model, "id", "asc", null);
+		 return "categories/categories";
+		// return listByPage(1, model, "id", "asc", null);
 	}
 
 	@GetMapping("/page/{pageNum}")
