@@ -53,7 +53,8 @@
 								<td>[[${cat.id}]]</td>
 								<td class="text-center">
 									<i th:if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
-									<img th:if="${cat.image != ''}" th:src="@{${cat.categoryImage}}" class="img" height="50" width="50">
+									<img th:if="${cat.image != ''}" th:src="@{${cat.imagePath}}" class="img-fluid img-thumbnail" 
+										 width="70">
 								</td>
 								<td>[[${cat.name}]]</td>
 								<td>[[${cat.alias}]]</td>

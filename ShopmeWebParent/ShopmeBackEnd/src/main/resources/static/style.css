@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  box-shadow: 2px 2px red !important;
+  border: 1.5px solid #0d6efd !important;
+}
+
 *.icon-white {
 	color: white;
 }

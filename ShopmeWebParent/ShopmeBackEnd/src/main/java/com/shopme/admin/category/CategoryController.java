@@ -130,5 +130,25 @@ public class CategoryController {
 //		service.delete(id);
 		return "redirect:/categories";
 	}
+	
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttrib) {
+		
+		try {
+			List<Category> listCategories = service.listCategoriesUsedInForm();
+			Category category = service.get(id);
+			
+			model.addAttribute("category", category);
+			model.addAttribute("pageTitle", "Edit Category (ID: " + id +  ")");
+			model.addAttribute("listCategories", listCategories);
+			
+			return "categories/category_form.html";
+		} catch (CategoryNotFoundException ex) {
+			
+			redirectAttrib.addFlashAttribute("message", ex.getMessage());
+			
+			return "redidrect:/categories";
+		}
+	}
 
 }

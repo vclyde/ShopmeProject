@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.shopme.common.entity.Category;
 
 import jakarta.transaction.Transactional;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -41,8 +42,6 @@ public class CategoryService {
 			for (Category subCategory : children) {
 				String name = "--" + subCategory.getName();
 				hierarchicalCategories.add(Category.copyFull(subCategory, name));
-				System.out.println(name);
-				
 				listSubHierarchicalSubCategories(hierarchicalCategories, subCategory, 1);
 			}
 		}
@@ -133,4 +132,13 @@ public class CategoryService {
 	public void updateUserEnabledStatus(Integer id, boolean enabled) {
 		catRepo.updateEnabledStatus(id, enabled);
 	}
+
+	public Category get(Integer id) throws CategoryNotFoundException {
+		try {
+			return catRepo.findById(id).get();
+		} catch (NoSuchElementException e) {
+			throw new CategoryNotFoundException("Could not find category with ID: " + id);
+		}
+	}
+
 }
