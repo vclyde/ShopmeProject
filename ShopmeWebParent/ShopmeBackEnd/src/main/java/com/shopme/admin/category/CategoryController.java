@@ -142,12 +142,11 @@ public class CategoryController {
 			model.addAttribute("pageTitle", "Edit Category (ID: " + id +  ")");
 			model.addAttribute("listCategories", listCategories);
 			
-			return "categories/category_form.html";
+			return "categories/category_form";
 		} catch (CategoryNotFoundException ex) {
 			
 			redirectAttrib.addFlashAttribute("message", ex.getMessage());
-			
-			return "redidrect:/categories";
+			return "redirect:/categories";
 		}
 	}
 

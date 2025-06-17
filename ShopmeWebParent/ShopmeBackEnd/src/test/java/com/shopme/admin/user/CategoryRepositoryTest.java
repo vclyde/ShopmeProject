@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import com.shopme.admin.category.CategoryRepository;
 import com.shopme.common.entity.Category;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Disabled
 @DataJpaTest(showSql = false)
@@ -24,7 +25,7 @@ public class CategoryRepositoryTest {
 
 	@Autowired
 	private CategoryRepository repo;
-
+	
 	@Disabled
 	@Test
 	public void testCreateRootCategory() {
@@ -120,5 +121,16 @@ public class CategoryRepositoryTest {
 		listRoot.forEach(category -> {
 			System.out.println(category.getName());
 		});
+	}
+	
+	@Test
+	public void testGetCategory2() {
+		Integer id = 100;
+		try {
+			 Category cat = repo.findById(id).get();
+			 System.out.println(cat);
+		} catch (NoSuchElementException e) {
+			System.out.println("Could not find category with ID: " + id);
+		}
 	}
 }
