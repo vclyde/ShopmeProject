@@ -38,7 +38,7 @@
 				</div>
 				<div class="full-details table-responsive">
 					<table class="table table-bordered table-hover">
-						<thead class="table-primary">
+						<thead class="table-dark">
 							<tr>
 								<th>ID</th>
 								<th>Category Image</th>
@@ -67,7 +67,7 @@
 								<td>
 									<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
 									   title="Edit this category"></a>
-									<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/categories/delete/' + ${cat.id}}"
+									<a class="bi bi-trash h4 icon-gray link-delete" th:hidden="${cat.hasChildren != false}" th:href="@{'/categories/delete/' + ${cat.id}}"
 									   th:catId="${cat.id}" title="Delete this category"></a>
 								</td>
 							</tr>

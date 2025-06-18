@@ -46,9 +46,18 @@ public class FileUploadUtil {
 					}
 				}
 			});
-		} catch (IOException ex2) {
-			LOGGER.error("Could not list directory: " + dir);
-//			System.out.println("Could not list directory: " + dir);
+		} catch (IOException ex) {
+			LOGGER.error("Could not list directory: " + dir, ex);
+		}
+	}
+
+	public static void removeDir(String dir) {
+		Path dirPath = Paths.get(dir);
+
+		try {
+			Files.delete(dirPath);
+		} catch (IOException ex) {
+			LOGGER.error("Could not delete directory: " + dir, ex);
 		}
 	}
 }

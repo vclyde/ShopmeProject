@@ -11,4 +11,7 @@
   	<module>ShopmeCommon</module>
   	<module>ShopmeWebParent</module>
   </modules>
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+    </properties>
 </project>

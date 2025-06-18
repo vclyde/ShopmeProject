@@ -65,6 +65,7 @@ public class Category {
 		copyCategory.setAlias(category.getAlias());
 		copyCategory.setEnabled(category.isEnabled());
 		copyCategory.setParent(category.getParent());
+		copyCategory.setChildren(category.getChildren());
 		return copyCategory;
 	}
 
@@ -157,6 +158,11 @@ public class Category {
 			return "/images/image-thumbnail.png";
 		}
 		return "/category-images/" + this.id + "/" + this.image;
+	}
+
+	@Transient
+	public boolean hasChildren() {
+		return !this.children.isEmpty();
 	}
 
 }

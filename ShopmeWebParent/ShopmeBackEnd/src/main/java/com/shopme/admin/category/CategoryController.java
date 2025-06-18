@@ -28,10 +28,10 @@ public class CategoryController {
 
 	@GetMapping
 	public String listFirstPage(Model model) {
-		 List<Category> categories = service.listAllCategories();
-		 model.addAttribute("listCategories", categories);
+		List<Category> categories = service.listAllCategories();
+		model.addAttribute("listCategories", categories);
 
-		 return "categories/categories";
+		return "categories/categories";
 		// return listByPage(1, model, "id", "asc", null);
 	}
 
@@ -122,29 +122,36 @@ public class CategoryController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteCategory(@PathVariable Integer id,
-			RedirectAttributes redirectAttrib) {
+	public String deleteCategory(@PathVariable Integer id, RedirectAttributes redirectAttrib) {
 
-//		FileUploadUtil.
-//		
-//		service.delete(id);
+		try {
+			String uploadDir = "../category-images/" + id;
+			FileUploadUtil.cleanDir(uploadDir);
+			FileUploadUtil.removeDir(uploadDir);
+
+			service.delete(id);
+			redirectAttrib.addFlashAttribute("message", "The category with ID " + id + " has been deleted successfully!");
+		} catch (CategoryNotFoundException ex) {
+			redirectAttrib.addFlashAttribute("message", ex.getMessage());
+		}
+
 		return "redirect:/categories";
 	}
-	
+
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes redirectAttrib) {
-		
+
 		try {
 			List<Category> listCategories = service.listCategoriesUsedInForm();
 			Category category = service.get(id);
-			
+
 			model.addAttribute("category", category);
-			model.addAttribute("pageTitle", "Edit Category (ID: " + id +  ")");
+			model.addAttribute("pageTitle", "Edit Category (ID: " + id + ")");
 			model.addAttribute("listCategories", listCategories);
-			
+
 			return "categories/category_form";
 		} catch (CategoryNotFoundException ex) {
-			
+
 			redirectAttrib.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/categories";
 		}
