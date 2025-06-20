@@ -90,7 +90,7 @@
 		moduleUrl = "[[@{/}]]";
 
 		function checkPasswordMatch(confirmPassword) {
-			if (confirmPassword.value != $('#password').val()) {
+			if (confirmPassword.value !== $('#password').val()) {
 				confirmPassword.setCustomValidity('Password do not match!');
 			} else {
 				confirmPassword.setCustomValidity('');

@@ -3,8 +3,6 @@ package com.shopme.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.data.annotation.Transient;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "categories")
@@ -40,6 +39,9 @@ public class Category {
 
 	@OneToMany(mappedBy = "parent")
 	private Set<Category> children = new HashSet<>(); // Sub-categories
+	
+	@Transient
+	private boolean hasChildren;
 
 	public static Category copyIdAndName(Category category) {
 		Category copyCategory = new Category();
@@ -65,7 +67,7 @@ public class Category {
 		copyCategory.setAlias(category.getAlias());
 		copyCategory.setEnabled(category.isEnabled());
 		copyCategory.setParent(category.getParent());
-		copyCategory.setChildren(category.getChildren());
+		copyCategory.setHasChildren(!category.getChildren().isEmpty());
 		return copyCategory;
 	}
 
@@ -159,10 +161,13 @@ public class Category {
 		}
 		return "/category-images/" + this.id + "/" + this.image;
 	}
-
-	@Transient
+	
 	public boolean hasChildren() {
-		return !this.children.isEmpty();
+		return hasChildren;
 	}
 
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
+	}
+	
 }

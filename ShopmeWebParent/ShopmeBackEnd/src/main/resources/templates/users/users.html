@@ -22,7 +22,7 @@
 							<label class="col-form-label">Filter: </label>
 						</div>
 						<div class="col-auto">
-							<input type="search" class="form-control" name="keyword" th:value="${keyword}" required>
+							<input type="search" class="form-control border border-dark" name="keyword" th:value="${keyword}" required>
 						</div>
 						<div class="col-auto">
 							<button class="btn btn-primary me-1" type="submit" title="Search">
@@ -154,6 +154,8 @@
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
+		moduleUrl = "[[@{/users}]]";
+
 		$(document).ready(function () {
 			$('.link-delete').on('click', function (e) {
 				e.preventDefault(); // prevent the default behavior of link/
@@ -166,9 +168,6 @@
 			});
 		});
 
-		function clearFilter() {
-			window.location = "[[@{/users}]]";
-		}
 	</script>
 </body>
 </html>

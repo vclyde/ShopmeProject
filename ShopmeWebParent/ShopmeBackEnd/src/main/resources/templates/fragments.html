@@ -16,5 +16,14 @@
 	<a th:fragment="page_link(pageNum, label)" class="page-link"
 	   th:href="@{'/users/page/' + ${pageNum} + '?sortField=' + ${sortField} +  '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
 
+	<div th:fragment="category_actions" th:remove="tag">
+		<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
+		   title="Edit this category"></a>
+
+		<th:block th:if="${cat.hasChildren == false}">
+			<a class="bi bi-trash h4 icon-gray link-delete" th:href="@{'/categories/delete/' + ${cat.id}}"
+			   th:catId="${cat.id}" title="Delete this category"></a>
+		</th:block>
+	</div>
 </body>
 </html>

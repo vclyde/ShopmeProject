@@ -138,11 +138,12 @@ public class UserController {
 	public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttrib) {
 
 		try {
+			service.delete(id);
+			
 			String uploadDir = "user-photos/" + id;
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.removeDir(uploadDir);
-
-			service.delete(id);
+			
 			redirectAttrib.addFlashAttribute("message", "The user ID " + id + " has been deleted successfully!");
 		} catch (UserNotFoundException e) {
 			redirectAttrib.addFlashAttribute("message", e.getMessage());

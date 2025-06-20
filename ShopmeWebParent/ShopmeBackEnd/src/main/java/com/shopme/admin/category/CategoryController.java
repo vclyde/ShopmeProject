@@ -125,11 +125,12 @@ public class CategoryController {
 	public String deleteCategory(@PathVariable Integer id, RedirectAttributes redirectAttrib) {
 
 		try {
+			service.delete(id);
+			
 			String uploadDir = "../category-images/" + id;
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.removeDir(uploadDir);
-
-			service.delete(id);
+			
 			redirectAttrib.addFlashAttribute("message", "The category with ID " + id + " has been deleted successfully!");
 		} catch (CategoryNotFoundException ex) {
 			redirectAttrib.addFlashAttribute("message", ex.getMessage());

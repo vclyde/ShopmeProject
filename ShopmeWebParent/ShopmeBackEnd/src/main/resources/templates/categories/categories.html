@@ -24,7 +24,7 @@
 							<label class="col-form-label">Filter: </label>
 						</div>
 						<div class="col-auto">
-							<input type="search" class="form-control" name="keyword" th:value="${keyword}" required>
+							<input type="search" class="form-control border border-dark" name="keyword" th:value="${keyword}" required>
 						</div>
 						<div class="col-auto">
 							<button class="btn btn-primary me-1" type="submit" title="Search">
@@ -64,11 +64,7 @@
 									<a th:if="${cat.enabled == false}" class="bi bi-check-circle-fill h4 icon-gray"
 									   th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}" title="Click to enable category"></a>
 								</td>
-								<td>
-									<a class="bi bi-pencil-square h4 icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
-									   title="Edit this category"></a>
-									<a class="bi bi-trash h4 icon-gray link-delete" th:hidden="${cat.hasChildren != false}" th:href="@{'/categories/delete/' + ${cat.id}}"
-									   th:catId="${cat.id}" title="Delete this category"></a>
+								<td th:insert="~{fragments :: category_actions}">
 								</td>
 							</tr>
 						</tbody>
@@ -135,6 +131,7 @@
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
+		moduleUrl = "[[@{/categories}]]";
 		$(document).ready(function () {
 			$('.link-delete').on('click', function (e) {
 				e.preventDefault(); // prevent the default behavior of link
@@ -146,10 +143,6 @@
 				$('#confirmModal').modal('show');
 			});
 		});
-
-		function clearFilter() {
-			window.location = "[[@{/categories}]]";
-		}
     </script>
 </body>
 </html>
