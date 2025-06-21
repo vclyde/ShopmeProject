@@ -59,12 +59,10 @@
 								<td>[[${cat.name}]]</td>
 								<td>[[${cat.alias}]]</td>
 								<td class="text-center">
-									<a th:if="${cat.enabled == true}" class="bi bi-check-circle-fill h4 icon-green"
-									   th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}" title="Click to disable category"></a>
-									<a th:if="${cat.enabled == false}" class="bi bi-check-circle-fill h4 icon-gray"
-									   th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}" title="Click to enable category"></a>
+									<div th:insert="~{fragments :: category_status}"></div>
 								</td>
-								<td th:insert="~{fragments :: category_actions}">
+								<td>
+									<div th:insert="~{fragments :: category_actions}"></div>
 								</td>
 							</tr>
 						</tbody>
@@ -110,24 +108,11 @@
 					</nav>
 				</div>
 			</div>
-			<div class="modal fade" tabindex="-1" id="confirmModal">
-				<div class="modal-dialog modal-fullscreen-sm-down">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="modalTitle">Delete Confirmation</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body text-center">
-							<span id="confirmText">Are you sure you want to delete category with ID </span>
-						</div>
-						<div class="modal-footer">
-							<a class="btn btn-success" href="" id="yesBtn">Yes</a>
-							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			
+			<div th:replace="~{modal_fragments :: confirm_modal}"></div>
+			
 			<div th:replace="~{layout :: footer}"></div>
+			
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
@@ -138,9 +123,7 @@
 
 				link = $(this);
 				catId = link.attr('catId');
-				$('#yesBtn').attr('href', link.attr('href'));
-				$('#confirmText').text('Are you sure you want to delete this category ID: ' + categoryId + "?");
-				$('#confirmModal').modal('show');
+				showDeleteConfirmationModal(link, 'category');
 			});
 		});
     </script>

@@ -141,7 +141,6 @@ public class UserController {
 			service.delete(id);
 			
 			String uploadDir = "user-photos/" + id;
-			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.removeDir(uploadDir);
 			
 			redirectAttrib.addFlashAttribute("message", "The user ID " + id + " has been deleted successfully!");

@@ -128,7 +128,6 @@ public class CategoryController {
 			service.delete(id);
 			
 			String uploadDir = "../category-images/" + id;
-			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.removeDir(uploadDir);
 			
 			redirectAttrib.addFlashAttribute("message", "The category with ID " + id + " has been deleted successfully!");
