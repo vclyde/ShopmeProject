@@ -26,4 +26,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer>,
 	public void updateEnabledStatus(Integer id, boolean enabled);
 
 	public Long countById(Integer id);
+	
+	public Category findByName(String name);
+	
+	public Category findByAlias(String alias);
 }

@@ -17,7 +17,7 @@ import com.shopme.common.entity.Category;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Disabled
+//@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
@@ -132,5 +132,23 @@ public class CategoryRepositoryTest {
 		} catch (NoSuchElementException e) {
 			System.out.println("Could not find category with ID: " + id);
 		}
+	}
+	
+	@Test
+	public void testFindByName() {
+		String name = "Computers";
+		Category category = repo.findByName(name);
+		
+		assertThat(category).isNotNull();
+		assertThat(category.getName()).isEqualTo(name);
+	}
+	
+	@Test
+	public void testFindByAlias() {
+		String alias = "computers";
+		Category category = repo.findByAlias(alias);
+		
+		assertThat(category).isNotNull();
+		assertThat(category.getAlias()).isEqualTo(alias);
 	}
 }

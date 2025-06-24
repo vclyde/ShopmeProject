@@ -25,7 +25,7 @@ public class CategoryController {
 
 	@Autowired
 	private CategoryService service;
-
+	
 	@GetMapping
 	public String listFirstPage(Model model) {
 		List<Category> categories = service.listAllCategories();
