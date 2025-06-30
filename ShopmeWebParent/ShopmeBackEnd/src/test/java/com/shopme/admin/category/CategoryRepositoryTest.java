@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +17,7 @@ import com.shopme.common.entity.Category;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//@Disabled
+@Disabled
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)

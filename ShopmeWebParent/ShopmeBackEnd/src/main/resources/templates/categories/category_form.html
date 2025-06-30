@@ -8,8 +8,10 @@
 				<!-- <div> -->
 				<h2 class="py-1">Manage Categories | [[${pageTitle}]]</h2>
 				<!-- </div> -->
-				<form th:action="@{/categories/save}" method="post" style="max-width: 590px; margin: 0 auto;" th:object="${category}"
-					  enctype="multipart/form-data">
+				<form th:action="@{/categories/save}" method="post" style="max-width: 590px; margin: 0 auto;" 
+					  th:object="${category}"
+					  enctype="multipart/form-data" 
+					  onsubmit="checkUnique(this)">
 					<input type="hidden" th:field="*{id}">
 					<div class="border border-secondary rounded p-4">
 
@@ -88,6 +90,19 @@
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
 		moduleUrl = "[[@{/categories}]]";
+		
+		function checkUnique(form) {
+			const catId = $('#id').val();
+			const catName = $('#name').val();
+			const catAlias = $('#alias').val();
+			
+			const csrfValue = $('input[name="_csrf"]').val();
+			
+			const url = "[[@{/categories/check-unique}]]";
+			
+			
+			return false;
+		}
 
 		function showModalDialog(title, message) {
 			$('#modalTitle').text(title);

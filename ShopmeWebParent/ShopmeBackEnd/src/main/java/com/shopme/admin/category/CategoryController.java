@@ -25,7 +25,7 @@ public class CategoryController {
 
 	@Autowired
 	private CategoryService service;
-	
+
 	@GetMapping
 	public String listFirstPage(Model model) {
 		List<Category> categories = service.listAllCategories();
@@ -126,10 +126,10 @@ public class CategoryController {
 
 		try {
 			service.delete(id);
-			
+
 			String uploadDir = "../category-images/" + id;
 			FileUploadUtil.removeDir(uploadDir);
-			
+
 			redirectAttrib.addFlashAttribute("message", "The category with ID " + id + " has been deleted successfully!");
 		} catch (CategoryNotFoundException ex) {
 			redirectAttrib.addFlashAttribute("message", ex.getMessage());

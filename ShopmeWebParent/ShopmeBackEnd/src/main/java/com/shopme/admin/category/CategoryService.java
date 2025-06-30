@@ -15,6 +15,7 @@ import com.shopme.common.entity.Category;
 
 import jakarta.transaction.Transactional;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -139,6 +140,33 @@ public class CategoryService {
 		} catch (NoSuchElementException e) {
 			throw new CategoryNotFoundException("Could not find category with ID: " + id);
 		}
+	}
+
+	public String checkUnique(Integer id, String name, String alias) {
+		boolean isCreatingNew = (id == null || id == 0);
+
+		Category categoryByName = catRepo.findByName(name);
+		if (isCreatingNew) {
+			if (categoryByName != null) {
+				return "DuplicateName";
+			} else {
+				Category categoryByAlias = catRepo.findByAlias(alias);
+				if (categoryByAlias != null) {
+					return "DuplicateAlias";
+				}
+			}
+		} else {
+			if (categoryByName != null && !Objects.equals(categoryByName.getId(), id)) {
+				return "DuplicateName";
+			}
+
+			Category categoryByAlias = catRepo.findByAlias(alias);
+			if (categoryByAlias != null && !Objects.equals(categoryByAlias.getId(), id)) {
+				return "DuplicateAlias";
+			}
+		}
+
+		return "OK";
 	}
 
 }
