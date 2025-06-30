@@ -17,16 +17,15 @@ public class UserCsvExporter extends AbstractExporter {
 
 		super.setResponseHeader(response, "text/csv", ".csv");
 
-		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		String[] csvHeader = { "User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled" };
-		String[] fieldMapping = { "id", "email", "firstName", "lastName", "roles", "enabled" };
-		csvWriter.writeHeader(csvHeader);
-
-		for (User user : list) {
-			csvWriter.write(user, fieldMapping);
+		try (ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE)) {
+			String[] csvHeader = { "User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled" };
+			String[] fieldMapping = { "id", "email", "firstName", "lastName", "roles", "enabled" };
+			csvWriter.writeHeader(csvHeader);
+			
+			for (User user : list) {
+				csvWriter.write(user, fieldMapping);
+			}
 		}
-
-		csvWriter.close();
 
 	}
 }

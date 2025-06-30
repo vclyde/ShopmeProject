@@ -58,8 +58,8 @@ public class UserExcelExporter extends AbstractExporter {
 		XSSFCell cell = row.createCell(columnIndex);
 		sheet.autoSizeColumn(columnIndex);
 		
-		if (value instanceof Integer) {
-			cell.setCellValue((Integer) value);
+		if (value instanceof Integer integer) {
+			cell.setCellValue(integer);
 		} else if (value instanceof Boolean) {
 			cell.setCellValue((boolean) value);
 		} else {
