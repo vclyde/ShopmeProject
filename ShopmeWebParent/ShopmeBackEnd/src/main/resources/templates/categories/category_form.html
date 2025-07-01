@@ -46,7 +46,7 @@
 							<label class="col-sm-3 col-form-label">Image:</label>
 							<div class="col-sm-9">
 								<input type="hidden" th:field="*{image}">
-								<input type="file" id="fileImage" name="fileImage" class="mb-2" accept="image/png, image/jpeg" 
+								<input type="file" id="fileImage" name="fileImage" class="form-control mb-2" accept="image/png, image/jpeg" 
 									   th:required="${category.imagePath == null}">
 								<img id="thumbnail" alt="Image preview" class="img-fluid img-thumbnail" width="300"
 									 th:src="@{${category.imagePath}}">
@@ -69,38 +69,58 @@
 					</div>
 				</form>
 			</div>
-			<div class="modal fade" tabindex="-1" id="modalDialog">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="modalTitle">Modal title</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body text-center">
-							<span id="modalBody"></span>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div th:replace="~{modal_fragments :: modal_dialog}"></div>
 			<div th:replace="~{layout :: footer}"></div>
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">
 		moduleUrl = "[[@{/categories}]]";
-		
+
 		function checkUnique(form) {
 			const catId = $('#id').val();
 			const catName = $('#name').val();
 			const catAlias = $('#alias').val();
-			
+
 			const csrfValue = $('input[name="_csrf"]').val();
-			
+
 			const url = "[[@{/categories/check-unique}]]";
+			const params = new URLSearchParams({
+				id: catId,
+				name: catName,
+				alias: catAlias,
+				_csrf: csrfValue
+			});
 			
-			
+			try {
+				fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: params.toString()
+			})
+			} catch (error) {
+				
+			}
+
+			// Promise style fetch
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.text();
+			}).then(result => {
+
+				if (result === "OK") {
+					form.submit();
+				} else {
+					showModalDialog("Warning", result);
+				}
+
+			}).catch(error => {
+				alert("Failed: " + error);
+			});
+
 			return false;
 		}
 

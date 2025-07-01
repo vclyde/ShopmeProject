@@ -20,11 +20,10 @@ public class CategoryRestController {
 	}
 
 	@PostMapping("/check-unique")
-	public String checkUnique(@RequestParam("id") Integer id,
-			@RequestParam("name") String name,
-			@RequestParam("alias") String alias) {
+	public String checkUnique(@RequestParam(defaultValue = "0") Integer id,
+			@RequestParam String name,
+			@RequestParam String alias) {
 		
 		return this.service.checkUnique(id, name, alias);
 	}
-
 }

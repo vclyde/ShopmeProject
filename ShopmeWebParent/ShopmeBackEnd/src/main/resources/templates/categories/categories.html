@@ -52,8 +52,8 @@
 							<tr th:each="cat : ${listCategories}">
 								<td>[[${cat.id}]]</td>
 								<td class="text-center">
-									<i th:if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h1"></i>
-									<img th:if="${cat.image != ''}" th:src="@{${cat.imagePath}}" class="img-fluid img-thumbnail" 
+									<i th:if="${cat.image == '' or cat.image == 'default.png'}" class="bi bi-card-image h2 icon-silver"></i>
+									<img th:if="${cat.image != '' and cat.image != 'default.png'}" th:src="@{${cat.imagePath}}" class="img-fluid img-thumbnail" 
 										 width="70">
 								</td>
 								<td>[[${cat.name}]]</td>
@@ -108,11 +108,11 @@
 					</nav>
 				</div>
 			</div>
-			
+
 			<div th:replace="~{modal_fragments :: confirm_modal}"></div>
-			
+
 			<div th:replace="~{layout :: footer}"></div>
-			
+
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
 	<script type="text/javascript">

@@ -75,7 +75,7 @@
 							<label class="col-sm-3 col-form-label">Photos:</label>
 							<div class="col-sm-9">
 								<input type="hidden" th:field="*{photos}">
-								<input type="file" id="fileImage" name="image" accept="image/png, image/jpeg" class="mb-2">
+								<input type="file" id="fileImage" name="image" accept="image/png, image/jpeg" class="form-control mb-3">
 								<img id="thumbnail" alt="Photos preview" th:src="@{${user.photosImagePath}}" class="img-fluid img-thumbnail"
 									 width="150">
 							</div>
@@ -88,23 +88,7 @@
 					</div>
 				</form>
 			</div>
-
-			<div class="modal fade" tabindex="-1" id="modalDialog">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="modalTitle">Modal title</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body text-center">
-							<span id="modalBody"></span>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div th:replace="~{modal_fragments :: modal_dialog}"></div>
 			<div th:replace="~{layout :: footer}"></div>
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
@@ -113,12 +97,12 @@
 
 		function checkEmailUnique(form) {
 
-			url = "[[@{/users/check-email}]]";
-			userEmail = $('#email').val();
-			userId = $('#id').val();
-			csrfVal = $('input[name="_csrf"]').val();
+			const url = "[[@{/users/check-email}]]";
+			const userEmail = $('#email').val();
+			const userId = $('#id').val();
+			const csrfVal = $('input[name="_csrf"]').val();
 
-			params = {
+			const params = {
 				id: userId,
 				email: userEmail,
 				_csrf: csrfVal
