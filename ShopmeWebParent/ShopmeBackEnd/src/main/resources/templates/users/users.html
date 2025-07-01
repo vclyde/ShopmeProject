@@ -162,9 +162,11 @@
 
 				link = $(this);
 				userId = link.attr('userId');
-				$('#yesBtn').attr('href', link.attr('href'));
-				$('#confirmText').text('Are you sure you want to delete this user ID: ' + userId + "?");
-				$('#confirmModal').modal('show');
+				
+				document.getElementById('yesBtn').href = link.attr('href');
+				document.getElementById('confirmText').textContent = 'Are you sure you want to delete this user ID: ' + userId + "?";
+				const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+				confirmModal.show();
 			});
 		});
 

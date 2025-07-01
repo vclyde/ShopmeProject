@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 
 	$('#fileImage').change(function() {
-		var file = this.files[0];
+		const file = this.files[0];
 		fileSize = file.size;
 
 		// alert("File size: " + fileSize);
@@ -35,8 +35,8 @@ $(document).ready(function() {
 });
 
 function showImageThumbnail(fileInput) {
-	var file = fileInput.files[0];
-	var reader = new FileReader();
+	let file = fileInput.files[0];
+	let reader = new FileReader();
 	reader.onload = function(e) { // Assigns a function to execute when the file has been successfully read
 		$("#thumbnail").attr('src', e.target.result); // e.target.result contains the result of the file read operation
 	};

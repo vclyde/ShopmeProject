@@ -9,9 +9,9 @@
 				<h2 class="py-1">Manage Categories | [[${pageTitle}]]</h2>
 				<!-- </div> -->
 				<form th:action="@{/categories/save}" method="post" style="max-width: 590px; margin: 0 auto;" 
-					  th:object="${category}"
+					  th:object="${category}" 
 					  enctype="multipart/form-data" 
-					  onsubmit="checkUnique(this)">
+					  onsubmit="return checkUnique(this)">
 					<input type="hidden" th:field="*{id}">
 					<div class="border border-secondary rounded p-4">
 
@@ -77,12 +77,11 @@
 		moduleUrl = "[[@{/categories}]]";
 
 		function checkUnique(form) {
+
 			const catId = $('#id').val();
 			const catName = $('#name').val();
 			const catAlias = $('#alias').val();
-
 			const csrfValue = $('input[name="_csrf"]').val();
-
 			const url = "[[@{/categories/check-unique}]]";
 			const params = new URLSearchParams({
 				id: catId,
@@ -90,46 +89,36 @@
 				alias: catAlias,
 				_csrf: csrfValue
 			});
-			
-			try {
-				fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: params.toString()
-			})
-			} catch (error) {
-				
-			}
 
-			// Promise style fetch
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
-				}
-				return response.text();
-			}).then(result => {
 
-				if (result === "OK") {
-					form.submit();
-				} else {
-					showModalDialog("Warning", result);
-				}
-
-			}).catch(error => {
-				alert("Failed: " + error);
+			$.post(url, params, function (response) {
+				showModalDialog("Info", response + " "(response === "OK") + " " + (response === "DuplicateAlias") + " " + (response === "DuplicateName"));
+//				if (response === "OK") {
+//					form.submit();
+//				} else if (response === "DuplicateAlias") {
+//					showModalDialog("Warning", "Duplicate alias!");
+//				} else if (response === "DuplicateName") {
+//					showModalDialog("Warning", "Duplicate name!");
+//				} else {
+//					showModalDialog("Error", "Unknown response from server");
+//				}
+			}).fail(function () {
+				showModalDialog("Error", "Could not connect to the server");
 			});
 
+			alert('caught');
 			return false;
 		}
 
 		function showModalDialog(title, message) {
-			$('#modalTitle').text(title);
-			$('#modalBody').text(message);
 
-			$('#modalDialog').modal('show');
+			document.getElementById('modalTitle').textContent = title;
+			document.getElementById('modalBody').textContent = message;
+			const myModal = new bootstrap.Modal(document.getElementById('modalDialog'));
+			myModal.show();
+
 		}
+
     </script>
 	<script th:src="@{/js/common_form.js}"></script>
 </body>
