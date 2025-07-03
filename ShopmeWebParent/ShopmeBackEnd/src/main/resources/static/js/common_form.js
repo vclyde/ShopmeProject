@@ -1,12 +1,14 @@
-$(document).ready(function() {
+/* global bootstrap */
 
-	$('#buttonCancel').on('click', function() {
+$(document).ready(function () {
+
+	$('#buttonCancel').on('click', function () {
 		window.location = moduleUrl;
 		// window.location = "/ShopmeAdmin/"
 	});
 
 
-	$('#fileImage').change(function() {
+	$('#fileImage').change(function () {
 		const file = this.files[0];
 		fileSize = file.size;
 
@@ -37,8 +39,25 @@ $(document).ready(function() {
 function showImageThumbnail(fileInput) {
 	let file = fileInput.files[0];
 	let reader = new FileReader();
-	reader.onload = function(e) { // Assigns a function to execute when the file has been successfully read
+	reader.onload = function (e) { // Assigns a function to execute when the file has been successfully read
 		$("#thumbnail").attr('src', e.target.result); // e.target.result contains the result of the file read operation
 	};
 	reader.readAsDataURL(file);
+}
+
+function showModalDialog(title, message) {
+
+	document.getElementById('modalTitle').textContent = title;
+	document.getElementById('modalBody').textContent = message;
+	const myModal = new bootstrap.Modal(document.getElementById('modalDialog'));
+	myModal.show();
+
+}
+
+function showWarningModal(message) {
+	showModalDialog("Warning", message);
+}
+
+function showErrorModal(message) {
+	showModalDialog("Error", message);
 }

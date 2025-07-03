@@ -102,33 +102,36 @@
 			const userId = $('#id').val();
 			const csrfVal = $('input[name="_csrf"]').val();
 
-			const params = {
+			const params = new URLSearchParams({
 				id: userId,
 				email: userEmail,
 				_csrf: csrfVal
-			}; // specify the key/param name
+			});
 
-			$.post(url, params, function (response) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: params.toString()
+			}).then(response => {
+				if (!response.ok) {
+					throw new Error("Server returned an error response");
+				}
+				return response.text();
+			}).then(response => {
 				if (response === "OK") {
 					form.submit();
 				} else if (response === "Duplicated") {
 					showModalDialog("Warning", "There is another user having the email " + userEmail);
 				} else {
-					showModalDialog("Error", "Unknown response from server");
+					showModalDialog("Error", "Unknown response from server" + response);
 				}
-			}).fail(function () {
+			}).catch(() => {
 				showModalDialog("Error", "Could not connect to the server");
 			});
 
 			return false;
-		}
-
-		function showModalDialog(title, message) {
-
-			document.getElementById('modalTitle').textContent = title;
-			document.getElementById('modalBody').textContent = message;
-			const myModal = new bootstrap.Modal(document.getElementById('modalDialog'));
-			myModal.show();
 		}
     </script>
     <script th:src="@{/js/common_form.js}"></script>

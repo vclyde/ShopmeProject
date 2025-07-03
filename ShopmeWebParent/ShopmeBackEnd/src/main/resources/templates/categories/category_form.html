@@ -73,7 +73,7 @@
 			<div th:replace="~{layout :: footer}"></div>
 		</div>
 	<th:block th:replace="~{layout :: scripts}"></th:block>
-	<script type="text/javascript">
+	<script>
 		moduleUrl = "[[@{/categories}]]";
 
 		function checkUnique(form) {
@@ -83,6 +83,7 @@
 			const catAlias = $('#alias').val();
 			const csrfValue = $('input[name="_csrf"]').val();
 			const url = "[[@{/categories/check-unique}]]";
+
 			const params = new URLSearchParams({
 				id: catId,
 				name: catName,
@@ -90,35 +91,33 @@
 				_csrf: csrfValue
 			});
 
-
-			$.post(url, params, function (response) {
-				showModalDialog("Info", response + " "(response === "OK") + " " + (response === "DuplicateAlias") + " " + (response === "DuplicateName"));
-//				if (response === "OK") {
-//					form.submit();
-//				} else if (response === "DuplicateAlias") {
-//					showModalDialog("Warning", "Duplicate alias!");
-//				} else if (response === "DuplicateName") {
-//					showModalDialog("Warning", "Duplicate name!");
-//				} else {
-//					showModalDialog("Error", "Unknown response from server");
-//				}
-			}).fail(function () {
-				showModalDialog("Error", "Could not connect to the server");
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: params.toString()
+			}).then(response => {
+				if (!response.ok) {
+					throw new Error("Server returned an error response");
+				}
+				return response.text();
+			}).then(response => {
+				if (response === "OK") {
+					form.submit();
+				} else if (response === "DuplicateAlias") {
+					showWarningModal("There's a category with the same alias!" + catAlias);
+				} else if (response === "DuplicateName") {
+					showWarningModal("There's a category with the same name!" + catName);
+				} else {
+					showErrorModal("Unknown response from server");
+				}
+			}).catch(() => {
+				showErrorModal("Could not connect to the server!");
 			});
 
-			alert('caught');
 			return false;
 		}
-
-		function showModalDialog(title, message) {
-
-			document.getElementById('modalTitle').textContent = title;
-			document.getElementById('modalBody').textContent = message;
-			const myModal = new bootstrap.Modal(document.getElementById('modalDialog'));
-			myModal.show();
-
-		}
-
     </script>
 	<script th:src="@{/js/common_form.js}"></script>
 </body>
